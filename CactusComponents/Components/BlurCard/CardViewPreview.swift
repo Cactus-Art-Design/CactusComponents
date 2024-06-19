@@ -24,15 +24,23 @@ public final class BlurCardComponent: CactusComponent, SingleInstance {
 private struct BlurCardPreview: View {
 //    MARK: Body
     var body: some View {
-        VStack {
-            HStack { Spacer() }
+        ZStack {
+            Image("Mojave")
+                .resizable()
+                .clipped()
+                .blur(radius: 50)
+                .scaleEffect(1.4)
             
-            Spacer()
-        
-            Card()
-                .scaleEffect(0.8)
-            
-            Spacer()
+            VStack {
+                HStack { Spacer() }
+                
+                Spacer()
+                
+                Card()
+                    .scaleEffect(0.8)
+                
+                Spacer()
+            }
             
         }.background(Color(red: 0.3, green: 0.3, blue: 0.3))
     }
