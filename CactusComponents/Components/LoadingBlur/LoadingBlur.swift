@@ -8,19 +8,20 @@
 import SwiftUI
 
 //MARK: Component Conformance
-internal final class LoadingBlurComponent: CactusComponent {
-    init() {
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+public final class LoadingBlurComponent: CactusComponent, SingleInstance {
+    private init() {
         super.init(name: "Loading Blur Demo",
-                   description: "This is a styled, animated loading background")
+                   description: "This is a styled, animated loading background") {
+            LoadingBlurViewPreview()
+        }
     }
     
-    static var shared: LoadingBlurComponent = LoadingBlurComponent()
-
-    @ViewBuilder override var preview: AnyView { AnyView(LoadingBlurViewPreview()) }
+    public static var shared: LoadingBlurComponent = LoadingBlurComponent()
 }
 
-
-struct LoadingBlurViewPreview: View {
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+private struct LoadingBlurViewPreview: View {
     var body: some View {
         ZStack {
             BlurredBackground()
@@ -32,7 +33,8 @@ struct LoadingBlurViewPreview: View {
 }
 
 //MARK: BurredBackground
-struct BlurredBackground: View {
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+private struct BlurredBackground: View {
     
     @Environment(\.colorScheme) var colorScheme
     
@@ -79,28 +81,32 @@ struct BlurredBackground: View {
         
         
         var body: some View {
-            Circle()
-                .offset(x: horizontalOffset - radius,
-                        y: verticalOffset - radius)
-                .frame(width: radius * 2, height: radius * 2)
-                .foregroundStyle(color)
-                .saturation(3)
-                .opacity(opacity)
-            
-                .onChange(of: horizontalOffset, {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + dynamicDuration) {
+            if #available(iOS 17.0, *) {
+                Circle()
+                    .offset(x: horizontalOffset - radius,
+                            y: verticalOffset - radius)
+                    .frame(width: radius * 2, height: radius * 2)
+                    .foregroundStyle(color)
+                    .saturation(3)
+                    .opacity(opacity)
+                
+                    .onChange(of: horizontalOffset, {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + dynamicDuration) {
+                            runAnimation()
+                        }
+                    })
+                
+                    .onAppear {
+                        let width = Double.random(in: 0...geo.size.width)
+                        let height = Double.random(in: 0...geo.size.height)
+                        
+                        self.horizontalOffset = width
+                        self.verticalOffset = height
                         runAnimation()
                     }
-                })
-            
-                .onAppear {
-                    let width = Double.random(in: 0...geo.size.width)
-                    let height = Double.random(in: 0...geo.size.height)
-                    
-                    self.horizontalOffset = width
-                    self.verticalOffset = height
-                    runAnimation()
-                }
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
     

@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */; };
+		C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C082C227DD4003A7737 /* LoadingWave.swift */; };
+		C9A02C0D2C228926003A7737 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C0B2C228925003A7737 /* CardView.swift */; };
+		C9A02C0E2C228926003A7737 /* CardViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C0C2C228926003A7737 /* CardViewPreview.swift */; };
+		C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */; };
+		C9A02C1D2C2291AF003A7737 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C192C2291AE003A7737 /* UIConstants.swift */; };
+		C9A02C1E2C2291AF003A7737 /* CardTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C1A2C2291AE003A7737 /* CardTemplateView.swift */; };
+		C9A02C1F2C2291AF003A7737 /* ScrollingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C1B2C2291AF003A7737 /* ScrollingCardView.swift */; };
+		C9A02C212C2291B7003A7737 /* StyledScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C202C2291B7003A7737 /* StyledScrollView.swift */; };
+		C9A02C262C2294F9003A7737 /* SlidingModalContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C232C2294F9003A7737 /* SlidingModalContent.swift */; };
+		C9A02C272C2294F9003A7737 /* SlidingModalPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C242C2294F9003A7737 /* SlidingModalPreview.swift */; };
+		C9A02C282C2294F9003A7737 /* SlidingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C252C2294F9003A7737 /* SlidingModal.swift */; };
 		C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */; };
 		C9BF0AB32C21C45200D7DEAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB22C21C45200D7DEAC /* ContentView.swift */; };
 		C9BF0AB52C21C45800D7DEAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BF0AB42C21C45800D7DEAC /* Assets.xcassets */; };
@@ -39,6 +50,17 @@
 
 /* Begin PBXFileReference section */
 		C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingBlur.swift; sourceTree = "<group>"; };
+		C9A02C082C227DD4003A7737 /* LoadingWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWave.swift; sourceTree = "<group>"; };
+		C9A02C0B2C228925003A7737 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		C9A02C0C2C228926003A7737 /* CardViewPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewPreview.swift; sourceTree = "<group>"; };
+		C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardPreview.swift; sourceTree = "<group>"; };
+		C9A02C192C2291AE003A7737 /* UIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
+		C9A02C1A2C2291AE003A7737 /* CardTemplateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTemplateView.swift; sourceTree = "<group>"; };
+		C9A02C1B2C2291AF003A7737 /* ScrollingCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardView.swift; sourceTree = "<group>"; };
+		C9A02C202C2291B7003A7737 /* StyledScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledScrollView.swift; sourceTree = "<group>"; };
+		C9A02C232C2294F9003A7737 /* SlidingModalContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingModalContent.swift; sourceTree = "<group>"; };
+		C9A02C242C2294F9003A7737 /* SlidingModalPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingModalPreview.swift; sourceTree = "<group>"; };
+		C9A02C252C2294F9003A7737 /* SlidingModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingModal.swift; sourceTree = "<group>"; };
 		C9BF0AAD2C21C45200D7DEAC /* CactusComponents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CactusComponents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusComponentsApp.swift; sourceTree = "<group>"; };
 		C9BF0AB22C21C45200D7DEAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -86,6 +108,45 @@
 				C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */,
 			);
 			path = LoadingBlur;
+			sourceTree = "<group>";
+		};
+		C9A02C072C227BD0003A7737 /* LoadingWave */ = {
+			isa = PBXGroup;
+			children = (
+				C9A02C082C227DD4003A7737 /* LoadingWave.swift */,
+			);
+			path = LoadingWave;
+			sourceTree = "<group>";
+		};
+		C9A02C0A2C228919003A7737 /* BlurCard */ = {
+			isa = PBXGroup;
+			children = (
+				C9A02C0B2C228925003A7737 /* CardView.swift */,
+				C9A02C0C2C228926003A7737 /* CardViewPreview.swift */,
+			);
+			path = BlurCard;
+			sourceTree = "<group>";
+		};
+		C9A02C0F2C228E38003A7737 /* ScrollCards */ = {
+			isa = PBXGroup;
+			children = (
+				C9A02C202C2291B7003A7737 /* StyledScrollView.swift */,
+				C9A02C1A2C2291AE003A7737 /* CardTemplateView.swift */,
+				C9A02C1B2C2291AF003A7737 /* ScrollingCardView.swift */,
+				C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */,
+				C9A02C192C2291AE003A7737 /* UIConstants.swift */,
+			);
+			path = ScrollCards;
+			sourceTree = "<group>";
+		};
+		C9A02C222C2294BE003A7737 /* SlidingModal */ = {
+			isa = PBXGroup;
+			children = (
+				C9A02C242C2294F9003A7737 /* SlidingModalPreview.swift */,
+				C9A02C232C2294F9003A7737 /* SlidingModalContent.swift */,
+				C9A02C252C2294F9003A7737 /* SlidingModal.swift */,
+			);
+			path = SlidingModal;
 			sourceTree = "<group>";
 		};
 		C9BF0AA42C21C45200D7DEAC = {
@@ -150,6 +211,10 @@
 		C9BF0ADB2C21C49E00D7DEAC /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C9A02C222C2294BE003A7737 /* SlidingModal */,
+				C9A02C0F2C228E38003A7737 /* ScrollCards */,
+				C9A02C0A2C228919003A7737 /* BlurCard */,
+				C9A02C072C227BD0003A7737 /* LoadingWave */,
 				C9A02BCB2C223FD7003A7737 /* LoadingBlur */,
 				C9BF0ADC2C21C4AF00D7DEAC /* Ticket */,
 			);
@@ -297,10 +362,21 @@
 			files = (
 				C9BF0AB32C21C45200D7DEAC /* ContentView.swift in Sources */,
 				C9BF0AE12C21C50600D7DEAC /* TicketShape.swift in Sources */,
+				C9A02C282C2294F9003A7737 /* SlidingModal.swift in Sources */,
+				C9A02C272C2294F9003A7737 /* SlidingModalPreview.swift in Sources */,
+				C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */,
 				C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */,
 				C9BF0AE32C21C5C600D7DEAC /* CactusComponent.swift in Sources */,
+				C9A02C0E2C228926003A7737 /* CardViewPreview.swift in Sources */,
+				C9A02C1E2C2291AF003A7737 /* CardTemplateView.swift in Sources */,
+				C9A02C1F2C2291AF003A7737 /* ScrollingCardView.swift in Sources */,
+				C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */,
 				C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */,
+				C9A02C1D2C2291AF003A7737 /* UIConstants.swift in Sources */,
+				C9A02C0D2C228926003A7737 /* CardView.swift in Sources */,
+				C9A02C212C2291B7003A7737 /* StyledScrollView.swift in Sources */,
 				C9BF0ADE2C21C4D000D7DEAC /* TicketView.swift in Sources */,
+				C9A02C262C2294F9003A7737 /* SlidingModalContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

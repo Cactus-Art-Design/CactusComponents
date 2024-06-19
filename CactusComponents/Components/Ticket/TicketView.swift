@@ -8,19 +8,36 @@
 import SwiftUI
 
 //MARK: Component Conformance
-internal final class TicketComponent: CactusComponent {
-    init() {
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+public final class TicketComponent: CactusComponent, SingleInstance {
+    private init() {
         super.init(name: "Ticket Demo",
-                   description: "This is a styled and interactable Museum Ticket")
+                   description: "This is a styled and interactable Museum Ticket") {
+            TicketViewPreview()
+        }
     }
     
-    static var shared: TicketComponent = TicketComponent()
+    public static var shared: TicketComponent = TicketComponent()
+}
 
-    @ViewBuilder override var preview: AnyView { AnyView(TicketViewPreview()) }
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+internal struct TicketViewPreview: View {
+    var body: some View {
+        
+        let ticket = Ticket(title: "Full Access BMFA",
+                            description: "This ticket gives access to all the exhibitis at the MFA",
+                            name: "Brian Masse",
+                            phoneNumber: "(781) 315 3811",
+                            date: .now,
+                            price: "9.99")
+        
+        TicketView(ticket: ticket)
+    }
 }
 
 //MARK: Ticket
-public struct Ticket {
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+internal struct Ticket {
     let id: String = UUID().uuidString
     
     let title: String
@@ -44,25 +61,9 @@ public struct Ticket {
     }
 }
 
-internal struct TicketViewPreview: View {
-
-    var body: some View {
-        
-        let ticket = Ticket(title: "Full Access BMFA",
-                            description: "This ticket gives access to all the exhibitis at the MFA",
-                            name: "Brian Masse",
-                            phoneNumber: "(781) 315 3811",
-                            date: .now,
-                            price: "9.99")
-        
-        TicketView(ticket: ticket)
-        
-    }
-}
-
 //MARK: TicketView
-@available(iOS 15.0, *)
-public struct TicketView: View {
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+internal struct TicketView: View {
 //    the position of where the ticket should be 'seperable' into the ticket stub
 //    normalized from the top
     static let ticketStubHeight: CGFloat = 0.75
@@ -160,7 +161,7 @@ public struct TicketView: View {
         }
     }
     
-    public init(ticket: Ticket) {
+    internal init(ticket: Ticket) {
         self.ticket = ticket
     }
     
@@ -191,17 +192,16 @@ public struct TicketView: View {
                     makeTopContent(fullContent: false)
                 }
                 .foregroundStyle(.black)
-                
-                TicketShape(corner: TicketShape.InvertedRoundedCorner)
-                    .stroke(lineWidth: 1)
-                    .opacity(0.5)
             }
         }
         .aspectRatio(17/40, contentMode: .fit)
+        .overlay {
+            TicketShape(corner: TicketShape.InvertedRoundedCorner)
+                .stroke(lineWidth: 1)
+                .opacity(0.5)
+        }
         .clipShape(TicketShape( corner: TicketShape.InvertedRoundedCorner ))
-        
-        .shadow(color: .black.opacity(0.2), radius: 15, x: 0, y: 10)
-        
+//        .shadow(color: .black.opacity(0.2), radius: 15, x: 0, y: 10)
         .padding()
     }
 }

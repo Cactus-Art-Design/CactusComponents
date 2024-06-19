@@ -8,21 +8,36 @@
 import Foundation
 import SwiftUI
 
-class CactusComponent: Identifiable {
-    let name: String
-    let description: String
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+public class CactusComponent: Identifiable {
+    public let name: String
+    public let description: String
     
-    init( name: String, description: String ) {
+    public init( name: String, description: String, @ViewBuilder previewBuilder: @escaping () -> some View ) {
         self.name = name
         self.description = description
         self.id = ""
+        
+        @ViewBuilder
+        func preview() -> AnyView {
+            AnyView( 
+                previewBuilder()
+                    .allowsHitTesting(false)
+            )
+        }
+        
+        self.preview = preview
+        
     }
     
-    var id: String
-    
-    @ViewBuilder var preview: AnyView { AnyView( EmptyView() ) }
+    public var id: String
+    public var preview: () -> AnyView
     
     static func == (lhs: CactusComponent, rhs: CactusComponent) -> Bool {
         lhs.id == rhs.id
     }
+}
+
+public protocol SingleInstance {
+    static var shared: Self {get}
 }
