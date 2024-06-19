@@ -12,6 +12,7 @@ struct Constants {
     static let mainFont: String = "Neutral Face"
 }
 
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 struct StyledText: View {
     let text: String
     let size: Double
@@ -26,10 +27,11 @@ struct StyledText: View {
     var body: some View {
         Text(text)
             .font(Font.custom(Constants.mainFont, size: size))
-            .bold(bold)
+//            .bold(bold)
     }
 }
 
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 struct Divider: View {
     var body: some View {
         Rectangle()

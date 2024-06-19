@@ -19,6 +19,7 @@
 		C9A02C262C2294F9003A7737 /* SlidingModalContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C232C2294F9003A7737 /* SlidingModalContent.swift */; };
 		C9A02C272C2294F9003A7737 /* SlidingModalPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C242C2294F9003A7737 /* SlidingModalPreview.swift */; };
 		C9A02C282C2294F9003A7737 /* SlidingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C252C2294F9003A7737 /* SlidingModal.swift */; };
+		C9A02C2A2C232B6C003A7737 /* ComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C292C232B6C003A7737 /* ComponentView.swift */; };
 		C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */; };
 		C9BF0AB32C21C45200D7DEAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB22C21C45200D7DEAC /* ContentView.swift */; };
 		C9BF0AB52C21C45800D7DEAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BF0AB42C21C45800D7DEAC /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		C9A02C232C2294F9003A7737 /* SlidingModalContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingModalContent.swift; sourceTree = "<group>"; };
 		C9A02C242C2294F9003A7737 /* SlidingModalPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingModalPreview.swift; sourceTree = "<group>"; };
 		C9A02C252C2294F9003A7737 /* SlidingModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingModal.swift; sourceTree = "<group>"; };
+		C9A02C292C232B6C003A7737 /* ComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentView.swift; sourceTree = "<group>"; };
 		C9BF0AAD2C21C45200D7DEAC /* CactusComponents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CactusComponents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusComponentsApp.swift; sourceTree = "<group>"; };
 		C9BF0AB22C21C45200D7DEAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 			children = (
 				C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */,
 				C9BF0AB22C21C45200D7DEAC /* ContentView.swift */,
+				C9A02C292C232B6C003A7737 /* ComponentView.swift */,
 				C9BF0AE22C21C5C600D7DEAC /* CactusComponent.swift */,
 				C9BF0AB42C21C45800D7DEAC /* Assets.xcassets */,
 				C9BF0ADB2C21C49E00D7DEAC /* Components */,
@@ -368,6 +371,7 @@
 				C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */,
 				C9BF0AE32C21C5C600D7DEAC /* CactusComponent.swift in Sources */,
 				C9A02C0E2C228926003A7737 /* CardViewPreview.swift in Sources */,
+				C9A02C2A2C232B6C003A7737 /* ComponentView.swift in Sources */,
 				C9A02C1E2C2291AF003A7737 /* CardTemplateView.swift in Sources */,
 				C9A02C1F2C2291AF003A7737 /* ScrollingCardView.swift in Sources */,
 				C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */,

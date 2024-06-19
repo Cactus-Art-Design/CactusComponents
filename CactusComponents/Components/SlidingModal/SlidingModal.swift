@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 internal struct SlidingModalLocalConstants {
         
     static let minCoverHeight: CGFloat = 275

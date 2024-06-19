@@ -41,8 +41,4 @@ private struct ScrollingCardPreview: View {
         }
     }
 }
-
-#Preview {
-    ContentView()
-}
-
+    

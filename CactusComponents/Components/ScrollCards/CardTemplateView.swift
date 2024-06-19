@@ -18,6 +18,7 @@ struct LocalConstants {
 }
 
 //MARK: CardTemplate
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 struct CardViewTemplate<Content: View>: View {
     
     let height: CGFloat
@@ -131,7 +132,7 @@ struct CardViewTemplate<Content: View>: View {
             }
         
             .onAppear { makeScale(in: geo) }
-            .onChange(of: scrollPosition) {
+            .onChange(of: scrollPosition) { _ in
                 makeScale(in: geo)
                 checkHalfContentToggle(in: geo)
             }

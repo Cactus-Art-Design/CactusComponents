@@ -193,15 +193,6 @@ internal struct SlidingBackContent: View {
     }
 }
 
-#Preview(body: {
-    SlidingModal { peekState in
-        SlidingFrontContent()
-    } backContentBuilder: { peekState in
-        SlidingBackContent(peekState: peekState)
-    }
-})
-
-
 
 let smallFillerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam. Quam lacus suspendisse faucibus interdum. Aenean sed adipiscing diam donec adipiscing tristique. Ut consequat semper viverra nam libero justo laoreet sit amet."
 
