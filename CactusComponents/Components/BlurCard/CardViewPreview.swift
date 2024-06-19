@@ -37,7 +37,6 @@ private struct BlurCardPreview: View {
                 Spacer()
                 
                 Card()
-                    .scaleEffect(0.8)
                 
                 Spacer()
             }

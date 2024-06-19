@@ -7,15 +7,33 @@
 
 import SwiftUI
 
+//This allows the view to render as it would with full screen access
+//then it is up to the children of the layout to apply the proper scaleEffect
+//Because of that, this view should likely be wrapped in a geometryReader
+fileprivate struct FitLayout: Layout {
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        return UIScreen.main.bounds.size
+    }
+    
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        
+        let proposal: ProposedViewSize = .init( UIScreen.main.bounds.size )
+        
+        subviews.first!.place(at: .init(x: bounds.midX, y: bounds.midY), anchor: .center, proposal: proposal)
+    }
+}
+
 //MARK: ContentView
 struct ContentView: View {
     
-    let components: [ CactusComponent ] = [ BlurCardComponent.shared,
+    let components: [ CactusComponent ] = [ TicketComponent.shared,
+                                            BlurCardComponent.shared,
                                             ScrollingCardComponent.shared,
                                             SlidingModalComponent.shared,
                                             LoadingWaveComponent.shared,
                                             LoadingBlurComponent.shared,
-                                            TicketComponent.shared]
+//                                            TicketComponent.shared
+    ]
     
 //    MARK: ComponentView
     @ViewBuilder
@@ -32,16 +50,22 @@ struct ContentView: View {
                 .padding(.bottom, -15)
             
             GeometryReader { geo in
-                VStack(spacing: 0) {
-                    component.preview()
-
-                    HStack { Spacer() }
+                FitLayout {
+                    
+                    let scale = geo.size.width / UIScreen.main.bounds.width
+                    
+                    VStack(spacing: 0) {
+                        component.preview()
+                        
+                        HStack { Spacer() }
+                    }
+                    .background(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 25))
+                    .shadow(color: .black.opacity(0.2), radius: 10, y: 10)
+                    .shadow(color: .black.opacity(0.5), radius: 0.1, x: 0.4, y: 0.4)
+                    .padding(.vertical, 30)
+                    .scaleEffect(scale, anchor: .topLeading)
                 }
-                .background(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 25))
-                .shadow(color: .black.opacity(0.2), radius: 10, y: 10)
-                .shadow(color: .black.opacity(0.5), radius: 0.1, x: 0.4, y: 0.4)
-                .padding(.vertical, 30)
             }
         }
         .padding(.horizontal, 5)
