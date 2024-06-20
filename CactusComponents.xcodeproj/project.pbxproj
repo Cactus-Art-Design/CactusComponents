@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */; };
 		C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C082C227DD4003A7737 /* LoadingWave.swift */; };
-		C9A02C0D2C228926003A7737 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C0B2C228925003A7737 /* CardView.swift */; };
-		C9A02C0E2C228926003A7737 /* CardViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C0C2C228926003A7737 /* CardViewPreview.swift */; };
 		C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */; };
 		C9A02C1D2C2291AF003A7737 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C192C2291AE003A7737 /* UIConstants.swift */; };
 		C9A02C1E2C2291AF003A7737 /* CardTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C1A2C2291AE003A7737 /* CardTemplateView.swift */; };
@@ -30,6 +28,8 @@
 		C9BF0ADE2C21C4D000D7DEAC /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0ADD2C21C4D000D7DEAC /* TicketView.swift */; };
 		C9BF0AE12C21C50600D7DEAC /* TicketShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AE02C21C50600D7DEAC /* TicketShape.swift */; };
 		C9BF0AE32C21C5C600D7DEAC /* CactusComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AE22C21C5C600D7DEAC /* CactusComponent.swift */; };
+		C9F153C62C245EDA00237130 /* BlurCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F153C42C245EDA00237130 /* BlurCardView.swift */; };
+		C9F153C72C245EDA00237130 /* BlurCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F153C52C245EDA00237130 /* BlurCardPreview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,8 +52,6 @@
 /* Begin PBXFileReference section */
 		C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingBlur.swift; sourceTree = "<group>"; };
 		C9A02C082C227DD4003A7737 /* LoadingWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWave.swift; sourceTree = "<group>"; };
-		C9A02C0B2C228925003A7737 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		C9A02C0C2C228926003A7737 /* CardViewPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewPreview.swift; sourceTree = "<group>"; };
 		C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardPreview.swift; sourceTree = "<group>"; };
 		C9A02C192C2291AE003A7737 /* UIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		C9A02C1A2C2291AE003A7737 /* CardTemplateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTemplateView.swift; sourceTree = "<group>"; };
@@ -77,6 +75,8 @@
 		C9BF0ADD2C21C4D000D7DEAC /* TicketView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		C9BF0AE02C21C50600D7DEAC /* TicketShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketShape.swift; sourceTree = "<group>"; };
 		C9BF0AE22C21C5C600D7DEAC /* CactusComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusComponent.swift; sourceTree = "<group>"; };
+		C9F153C42C245EDA00237130 /* BlurCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurCardView.swift; sourceTree = "<group>"; };
+		C9F153C52C245EDA00237130 /* BlurCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurCardPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,8 +123,8 @@
 		C9A02C0A2C228919003A7737 /* BlurCard */ = {
 			isa = PBXGroup;
 			children = (
-				C9A02C0B2C228925003A7737 /* CardView.swift */,
-				C9A02C0C2C228926003A7737 /* CardViewPreview.swift */,
+				C9F153C42C245EDA00237130 /* BlurCardView.swift */,
+				C9F153C52C245EDA00237130 /* BlurCardPreview.swift */,
 			);
 			path = BlurCard;
 			sourceTree = "<group>";
@@ -297,7 +297,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					C9BF0AAC2C21C45200D7DEAC = {
 						CreatedOnToolsVersion = 15.3;
@@ -370,16 +370,16 @@
 				C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */,
 				C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */,
 				C9BF0AE32C21C5C600D7DEAC /* CactusComponent.swift in Sources */,
-				C9A02C0E2C228926003A7737 /* CardViewPreview.swift in Sources */,
 				C9A02C2A2C232B6C003A7737 /* ComponentView.swift in Sources */,
 				C9A02C1E2C2291AF003A7737 /* CardTemplateView.swift in Sources */,
 				C9A02C1F2C2291AF003A7737 /* ScrollingCardView.swift in Sources */,
 				C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */,
 				C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */,
 				C9A02C1D2C2291AF003A7737 /* UIConstants.swift in Sources */,
-				C9A02C0D2C228926003A7737 /* CardView.swift in Sources */,
 				C9A02C212C2291B7003A7737 /* StyledScrollView.swift in Sources */,
+				C9F153C72C245EDA00237130 /* BlurCardPreview.swift in Sources */,
 				C9BF0ADE2C21C4D000D7DEAC /* TicketView.swift in Sources */,
+				C9F153C62C245EDA00237130 /* BlurCardView.swift in Sources */,
 				C9A02C262C2294F9003A7737 /* SlidingModalContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,6 +451,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -469,6 +470,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -512,6 +514,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -524,6 +527,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -539,6 +543,7 @@
 				CODE_SIGN_ENTITLEMENTS = CactusComponents/CactusComponents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CactusComponents/Preview Content\"";
 				DEVELOPMENT_TEAM = LN4JU8GNV7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -577,6 +582,7 @@
 				CODE_SIGN_ENTITLEMENTS = CactusComponents/CactusComponents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CactusComponents/Preview Content\"";
 				DEVELOPMENT_TEAM = LN4JU8GNV7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -614,6 +620,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = LN4JU8GNV7;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
@@ -637,6 +644,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = LN4JU8GNV7;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
@@ -659,6 +667,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = LN4JU8GNV7;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
@@ -681,6 +690,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = LN4JU8GNV7;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;

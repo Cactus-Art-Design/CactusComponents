@@ -26,10 +26,9 @@ fileprivate struct FitLayout: Layout {
 //MARK: ContentView
 struct ContentView: View {
     
-    let components: [ CactusComponent ] = [
-        LoadingBlurComponent.shared,
+    let components: [ CactusComponent ] = [ BlurCardComponent.shared,
             TicketComponent.shared,
-                                            BlurCardComponent.shared,
+                                            
                                             ScrollingCardComponent.shared,
                                             SlidingModalComponent.shared,
                                             LoadingWaveComponent.shared,
