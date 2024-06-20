@@ -93,7 +93,3 @@ private struct BlurCardPreview: View {
         }
     }
 }
-
-#Preview {
-    ContentView()
-}
