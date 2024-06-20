@@ -19,10 +19,10 @@ public class CactusComponent: Identifiable {
         self.id = ""
         
         @ViewBuilder
-        func preview() -> AnyView {
-            AnyView( 
+        func preview(_ allowsHitTesting: Bool = true) -> AnyView {
+            AnyView(
                 previewBuilder()
-                    .allowsHitTesting(false)
+                    .allowsHitTesting(allowsHitTesting)
             )
         }
         
@@ -31,7 +31,7 @@ public class CactusComponent: Identifiable {
     }
     
     public var id: String
-    public var preview: () -> AnyView
+    public var preview: (Bool) -> AnyView
     
     static func == (lhs: CactusComponent, rhs: CactusComponent) -> Bool {
         lhs.id == rhs.id

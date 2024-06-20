@@ -26,7 +26,9 @@ fileprivate struct FitLayout: Layout {
 //MARK: ContentView
 struct ContentView: View {
     
-    let components: [ CactusComponent ] = [ TicketComponent.shared,
+    let components: [ CactusComponent ] = [
+        LoadingBlurComponent.shared,
+            TicketComponent.shared,
                                             BlurCardComponent.shared,
                                             ScrollingCardComponent.shared,
                                             SlidingModalComponent.shared,
@@ -35,40 +37,58 @@ struct ContentView: View {
 //                                            TicketComponent.shared
     ]
     
-//    MARK: ComponentView
-    @ViewBuilder
-    private func makeComponentView(_ component: CactusComponent) -> some View {
-        VStack(alignment: .leading) {
-            Text( component.name )
-                .font(.title)
-                .bold()
-                .lineLimit(1, reservesSpace: true)
-                .padding(.trailing)
-            
-            Text( component.description )
-                .lineLimit(2, reservesSpace: true)
-                .padding(.bottom, -15)
-            
-            GeometryReader { geo in
-                FitLayout {
-                    
-                    let scale = geo.size.width / UIScreen.main.bounds.width
-                    
-                    VStack(spacing: 0) {
-                        component.preview()
+//    MARK: ComponentPreview
+    private struct ComponentPreviewView: View {
+        
+        @State private var showingFullComponentView: Bool = false
+        
+        let component: CactusComponent
+        
+        init( _ component: CactusComponent ) {
+            self.component = component
+        }
+        
+        var body: some View {
+            VStack(alignment: .leading) {
+                Text( component.name )
+                    .font(.title)
+                    .bold()
+                    .lineLimit(1, reservesSpace: true)
+                    .padding(.trailing)
+                
+                Text( component.description )
+                    .lineLimit(2, reservesSpace: true)
+                    .padding(.bottom, -15)
+                
+                GeometryReader { geo in
+                    FitLayout {
                         
-                        HStack { Spacer() }
+                        let scale = geo.size.width / UIScreen.main.bounds.width
+                        
+                        VStack(spacing: 0) {
+                            component.preview(false)
+                            
+                            HStack { Spacer() }
+                        }
+                        .background(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
+                        .shadow(color: .black.opacity(0.2), radius: 10, y: 10)
+                        .shadow(color: .black.opacity(0.5), radius: 0.1, x: 0.4, y: 0.4)
+                        .padding(.vertical, 30)
+                        .scaleEffect(scale, anchor: .topLeading)
                     }
-                    .background(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                    .shadow(color: .black.opacity(0.2), radius: 10, y: 10)
-                    .shadow(color: .black.opacity(0.5), radius: 0.1, x: 0.4, y: 0.4)
-                    .padding(.vertical, 30)
-                    .scaleEffect(scale, anchor: .topLeading)
+                }
+                .holdLoadingWheel( message: "Keep holding to open this component") {
+                    showingFullComponentView = true
+                }
+            }
+            .padding(.horizontal, 5)
+            .sheet(isPresented: $showingFullComponentView) {
+                ZStack {
+                    component.preview(true)
                 }
             }
         }
-        .padding(.horizontal, 5)
     }
     
 //    MARK: Body
@@ -80,7 +100,7 @@ struct ContentView: View {
                         ForEach( 0..<components.count, id: \.self ) { i in
                             let component = components[i]
                             
-                            makeComponentView(component)
+                            ComponentPreviewView(component)
                                 .frame(width: geo.size.width - 80)
                         }
                     }
