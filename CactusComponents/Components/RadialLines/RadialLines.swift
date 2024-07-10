@@ -174,6 +174,7 @@ struct RadialLinesControls: View {
     var body: some View {
         
         VStack {
+        
             makeControls()
             
             RadialLines(lines: Int(lines), width: width,
