@@ -183,7 +183,7 @@ struct RadialLinesControls: View {
                 Text( "52" )
                     .font(.largeTitle)
                     .bold()
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.foreground)
             }
                         .foregroundStyle(.red)
         }
@@ -191,5 +191,7 @@ struct RadialLinesControls: View {
 }
 
 #Preview {
-    RadialLinesControls()
+//    RadialLinesControls()
+    TestView()
 }
+

@@ -8,51 +8,53 @@
 import Foundation
 import SwiftUI
 
-struct StripedFill<S>: ViewModifier where S: ShapeStyle {
-    
 //    MARK: Line
-    private struct Line: Shape {
+private struct StripedLine: Shape {
+    
+    let angle: Double
+    
+    static func getAdditionalLength( angle: Double, in rect: CGRect) -> Double {
+        let angle = (Double.pi * angle) / 180
+        let length = StripedLine.getLength(angle: angle, in: rect)
+    
+        return abs(cos(angle) * length)
         
-        let angle: Double
+    }
+    
+    static func getLength( angle: Double, in rect: CGRect ) -> Double {
         
-        static func getAdditionalLength( angle: Double, in rect: CGRect) -> Double {
-            let angle = (Double.pi * angle) / 180
-            let length = Line.getLength(angle: angle, in: rect)
-            
-            return abs(cos(angle) * length)
-        }
+        let slope = tan( angle )
         
-        static func getLength( angle: Double, in rect: CGRect ) -> Double {
-            
-            let slope = tan( angle )
-            
-            let x = (rect.maxY - rect.midY) * (1 / slope) + rect.minX
-            
-            let dx = x - rect.minX
-            let dy = rect.maxY - rect.midY
-            
-            return sqrt( pow(dx, 2) + pow(dy, 2) )
-        }
+        let x = (rect.maxY - rect.midY) * (1 / slope) + rect.minX
         
+        let dx = x - rect.minX
+        let dy = rect.maxY - rect.midY
+        
+        return sqrt( pow(dx, 2) + pow(dy, 2) )
+    }
+    
+    
 //        MARK: Line Path
-        func path(in rect: CGRect) -> Path {
+    func path(in rect: CGRect) -> Path {
+        
+        Path { path in
             
-            Path { path in
-                
-                let angle = (Double.pi * angle) / 180
-                let length = Line.getLength(angle: angle, in: rect)
-                
-                let x = length * cos(angle)
-                let y = length * sin(angle)
-                
-                path.move(to: .init(x: rect.minX - x,
-                                    y: rect.midY + y ))
-                
-                path.addLine(to: .init(x: rect.minX + x,
-                                       y: rect.midY - y ))
-            }
+            let angle = (Double.pi * angle) / 180
+            let length = StripedLine.getLength(angle: angle, in: rect)
+            
+            let x = length * cos(angle)
+            let y = length * sin(angle)
+            
+            path.move(to: .init(x: rect.minX - x,
+                                y: rect.midY + y ))
+            
+            path.addLine(to: .init(x: rect.minX + x,
+                                   y: rect.midY - y ))
         }
     }
+}
+
+struct StripedFill<S>: ViewModifier where S: ShapeStyle {
     
 //    MARK: ViewModifier Vars
     let angle: Double
@@ -81,7 +83,7 @@ struct StripedFill<S>: ViewModifier where S: ShapeStyle {
             .background {
                 GeometryReader { geo in
                     
-                    let additionalLength = Line.getAdditionalLength(angle: angle, in: .init(x: 0, y: 0,
+                    let additionalLength = StripedLine.getAdditionalLength(angle: angle, in: .init(x: 0, y: 0,
                                                                                             width: geo.size.width,
                                                                                             height: geo.size.height)  )
                 
@@ -92,7 +94,7 @@ struct StripedFill<S>: ViewModifier where S: ShapeStyle {
                     
                     ZStack {
                         ForEach( 0...count, id: \.self ) { i in
-                            Line(angle: angle )
+                            StripedLine(angle: angle )
                                 .stroke(style: .init(lineWidth: lineWidth, lineCap: CGLineCap.square))
                                 .foregroundStyle( foregroundStyle )
                             
@@ -132,28 +134,41 @@ struct TestView: View {
     
     var body: some View {
         
-        VStack {
-            Spacer()
-            
-            HStack {
-                Text("hello!")
-                
-                    .padding()
-                    .foregroundStyle(.white)
-                    .bold()
-//                
-                Spacer()
+        ZStack {
+            GeometryReader { geo in
             }
-            .stripedFill(at: 45, width: 15, opacity: 0.5, overlayWithNormal: false)
-            .background(.red)
             
-            Spacer()
+            
+            Rectangle()
+                .foregroundStyle(.clear)
+                .stripedFill(at: 90, width: 3, spacing: 6)
+                .mask {
+                    VStack {
+                        Circle()
+                            .frame(width: 200, height: 200)
+                        
+                        Text("\(52)")
+                             .font(.custom("-", size: 120))
+                    }
+                    .shadow(color: .white, radius: 50)
+                }
+            
+                
+//                .bold()
+//                .mask {
+//                    Text("")
+//                }
+                
+          
         }
-        .stripedFill(at: 90, width: 5, opacity: 0.05)
+        .stripedFill(at: 45, width: 5, opacity: 0.05)
         .ignoresSafeArea()
+//        .compositingGroup()
+//        .luminanceToAlpha()
     }
 }
 
 #Preview {
+//    RadialLinesControls()
     TestView()
 }
