@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C951876C2C3EE7FF00419E3A /* RadialLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876B2C3EE7FF00419E3A /* RadialLines.swift */; };
 		C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */; };
 		C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C082C227DD4003A7737 /* LoadingWave.swift */; };
 		C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C951876B2C3EE7FF00419E3A /* RadialLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialLines.swift; sourceTree = "<group>"; };
 		C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingBlur.swift; sourceTree = "<group>"; };
 		C9A02C082C227DD4003A7737 /* LoadingWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWave.swift; sourceTree = "<group>"; };
 		C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardPreview.swift; sourceTree = "<group>"; };
@@ -104,6 +106,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C951876A2C3EE7EA00419E3A /* RadialLines */ = {
+			isa = PBXGroup;
+			children = (
+				C951876B2C3EE7FF00419E3A /* RadialLines.swift */,
+			);
+			path = RadialLines;
+			sourceTree = "<group>";
+		};
 		C9A02BCB2C223FD7003A7737 /* LoadingBlur */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +224,7 @@
 		C9BF0ADB2C21C49E00D7DEAC /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C951876A2C3EE7EA00419E3A /* RadialLines */,
 				C9A02C222C2294BE003A7737 /* SlidingModal */,
 				C9A02C0F2C228E38003A7737 /* ScrollCards */,
 				C9A02C0A2C228919003A7737 /* BlurCard */,
@@ -374,6 +385,7 @@
 				C9A02C1E2C2291AF003A7737 /* CardTemplateView.swift in Sources */,
 				C9A02C1F2C2291AF003A7737 /* ScrollingCardView.swift in Sources */,
 				C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */,
+				C951876C2C3EE7FF00419E3A /* RadialLines.swift in Sources */,
 				C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */,
 				C9A02C1D2C2291AF003A7737 /* UIConstants.swift in Sources */,
 				C9A02C212C2291B7003A7737 /* StyledScrollView.swift in Sources */,

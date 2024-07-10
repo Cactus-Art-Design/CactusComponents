@@ -8,15 +8,13 @@
 import SwiftUI
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public final class LoadingWaveComponent: CactusComponent, SingleInstance {
-    private init() {
+public final class LoadingWaveComponent: CactusComponent {
+    required init() {
         super.init(name: "Loading Wave Demo",
                    description: "This is an infinite wave loading view") {
             LoadingWavePreview()
         }
     }
-    
-    public static var shared: LoadingWaveComponent = LoadingWaveComponent()
 }
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)

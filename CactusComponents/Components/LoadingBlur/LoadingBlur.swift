@@ -9,15 +9,13 @@ import SwiftUI
 
 //MARK: Component Conformance
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public final class LoadingBlurComponent: CactusComponent, SingleInstance {
-    private init() {
+public final class LoadingBlurComponent: CactusComponent {
+    required init() {
         super.init(name: "Loading Blur Demo",
                    description: "This is a styled, animated loading background") {
             LoadingBlurViewPreview()
         }
     }
-    
-    public static var shared: LoadingBlurComponent = LoadingBlurComponent()
 }
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)

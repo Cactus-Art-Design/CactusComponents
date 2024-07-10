@@ -9,15 +9,13 @@ import SwiftUI
 
 //MARK: Component Conformance
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public final class TicketComponent: CactusComponent, SingleInstance {
-    private init() {
+public final class TicketComponent: CactusComponent {
+    required init() {
         super.init(name: "Ticket Demo",
                    description: "This is a styled and interactable Museum Ticket") {
             TicketViewPreview()
         }
     }
-    
-    public static var shared: TicketComponent = TicketComponent()
 }
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)

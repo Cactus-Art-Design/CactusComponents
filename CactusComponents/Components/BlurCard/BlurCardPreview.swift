@@ -8,15 +8,13 @@
 import SwiftUI
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public final class BlurCardComponent: CactusComponent, SingleInstance {
-    private init() {
+public final class BlurCardComponent: CactusComponent {
+    required init() {
         super.init(name: "Loading Blur Demo",
                    description: "This is a styled, animated loading background") {
             BlurCardPreview()
         }
     }
-    
-    public static var shared: BlurCardComponent = BlurCardComponent()
 }
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)

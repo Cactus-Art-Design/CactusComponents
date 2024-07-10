@@ -8,15 +8,13 @@
 import SwiftUI
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public final class ScrollingCardComponent: CactusComponent, SingleInstance {
-    private init() {
+public final class ScrollingCardComponent: CactusComponent {
+    required init() {
         super.init(name: "Scrolling Cards",
                    description: "A styled scroll view that animates the opacity and size of cards as they move") {
             ScrollingCardPreview()
         }
     }
-    
-    public static var shared: ScrollingCardComponent = ScrollingCardComponent()
 }
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
