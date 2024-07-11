@@ -54,19 +54,24 @@ private struct StripedLine: Shape {
     }
 }
 
-struct StripedFill<S>: ViewModifier where S: ShapeStyle {
+struct StripedFill<S>: ViewModifier, Animatable where S: ShapeStyle {
     
 //    MARK: ViewModifier Vars
-    let angle: Double
+    var angle: Double
     let lineWidth: Double
     let spacing: Double
     let opacity: Double
     let foregroundStyle: S
     let overlayWithNormal: Bool
     
+    var animatableData: Double {
+        get { angle }
+        set { self.angle = newValue }
+    }
+    
     init( at angle: Double, width: Double, spacing: Double?, style: S, opacity: Double, overlayWithNormal: Bool ) {
         
-        self.angle = (angle.truncatingRemainder(dividingBy: 180) == 0) ? 189.9 : angle
+        self.angle = (angle.truncatingRemainder(dividingBy: 180) == 0) ? 0.01 : angle
         self.lineWidth = width
         self.spacing = spacing == nil ? width : spacing!
         self.opacity = opacity
@@ -83,6 +88,7 @@ struct StripedFill<S>: ViewModifier where S: ShapeStyle {
             .background {
                 GeometryReader { geo in
                     
+                    let angle = (angle.truncatingRemainder(dividingBy: 180) == 0) ? 0.01 : angle
                     let additionalLength = StripedLine.getAdditionalLength(angle: angle, in: .init(x: 0, y: 0,
                                                                                             width: geo.size.width,
                                                                                             height: geo.size.height)  )
@@ -94,7 +100,7 @@ struct StripedFill<S>: ViewModifier where S: ShapeStyle {
                     
                     ZStack {
                         ForEach( 0...count, id: \.self ) { i in
-                            StripedLine(angle: angle )
+                            StripedLine(angle: animatableData )
                                 .stroke(style: .init(lineWidth: lineWidth, lineCap: CGLineCap.square))
                                 .foregroundStyle( foregroundStyle )
                             
@@ -107,6 +113,39 @@ struct StripedFill<S>: ViewModifier where S: ShapeStyle {
                     }
                 }
                 .clipShape(Rectangle())
+            }
+    }
+}
+
+//MARK: StripedMask
+struct StripedMask<S>: ViewModifier where S: ShapeStyle {
+    
+//    MARK: ViewModifier Vars
+    var angle: Double
+    let lineWidth: Double
+    let spacing: Double
+    let opacity: Double
+    let maskOpacity: Double
+    let foregroundStyle: S
+    let overlayWithNormal: Bool
+    
+    var animatableData: Double {
+        get { angle }
+        set { self.angle = newValue }
+    }
+    
+    func body(content: Content) -> some View {
+        
+        content
+            .mask {
+                Rectangle()
+                    .opacity(1 - maskOpacity)
+                    .stripedFill(at: animatableData,
+                                 width: lineWidth,
+                                 spacing: spacing,
+                                 style: foregroundStyle,
+                                 opacity: opacity,
+                                 overlayWithNormal: overlayWithNormal)
             }
     }
 }
@@ -126,45 +165,75 @@ extension View {
                              opacity: opacity,
                              overlayWithNormal: overlayWithNormal))
     }
+    
+    func stripedMask<S>(at angle: Double = 90,
+                        width: Double = 2,
+                        spacing: Double? = nil,
+                        style: S = .foreground,
+                        opacity: Double = 1,
+                        maskOpacity: Double = 1,
+                        overlayWithNormal: Bool = true) -> some View where S: ShapeStyle {
+        
+        modifier( StripedMask(angle: angle,
+                              lineWidth: width,
+                              spacing: spacing == nil ? width : spacing!,
+                              opacity: opacity,
+                              maskOpacity: maskOpacity,
+                              foregroundStyle: style,
+                              overlayWithNormal: overlayWithNormal) )
+        
+    }
 }
 
+//MARK: TestView
 struct TestView: View {
     
-    @State private var angle: Double = 45
+    @State private var angle: Double = 96
+    
+    @State private var secondaryAngle: Double = 0
+    @State private var color: Color = .red
+    
+    private func shuffleColor() {
+        self.color = Color(red: Double.random(in: 0...1),
+                           green: Double.random(in: 0...1),
+                           blue: Double.random(in: 0...1))
+    }
     
     var body: some View {
         
-        ZStack {
-            GeometryReader { geo in
-            }
-            
-            
-            Rectangle()
-                .foregroundStyle(.clear)
-                .stripedFill(at: 90, width: 3, spacing: 6)
-                .mask {
-                    VStack {
-                        Circle()
-                            .frame(width: 200, height: 200)
+        VStack {
+            ZStack {
+                VStack {
+                    HStack { Spacer() }
+                    Spacer()
+                    
+                    Circle()
+                        .frame(width: 200, height: 200)
+                        .foregroundStyle(color)
+                        .shadow(color: color, radius: 50)
+                    
+                    Text("52")
+                        .font(.custom("arial", size:  140))
+                        .bold()
+                        .fontWeight(.black)
+                    
+                    HStack {
+                        Text( "Shuffle" )
                         
-                        Text("\(52)")
-                             .font(.custom("-", size: 120))
+                        Image(systemName: "circle.hexagongrid")
                     }
-                    .shadow(color: .white, radius: 50)
+                    .font(.title)
+                    .onTapGesture { withAnimation { shuffleColor() } }
+                    
+                    Spacer()
                 }
+            }
+            .stripedMask(at: angle, width: 2, spacing: 3, maskOpacity: 0.95)
+            .stripedMask(at: secondaryAngle, width: 25, spacing: 5, maskOpacity: 0.7)
             
-                
-//                .bold()
-//                .mask {
-//                    Text("")
-//                }
-                
-          
+            .stripedFill(at: 45, width: 5, opacity: 0.02)
+            .ignoresSafeArea()
         }
-        .stripedFill(at: 45, width: 5, opacity: 0.05)
-        .ignoresSafeArea()
-//        .compositingGroup()
-//        .luminanceToAlpha()
     }
 }
 
