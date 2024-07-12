@@ -8,11 +8,37 @@
 import Foundation
 import SwiftUI
 
+struct RotationNodePreferenceKey: PreferenceKey {
+    struct RotationNodePreferenceStorageData: Equatable {
+        let interiorBounds: CGRect
+        let anchor: Anchor<CGRect>
+    }
+    
+    typealias Value = [ Int: RotationNodePreferenceStorageData ]
+
+    static var defaultValue: Value = [:]
+
+    static func reduce(
+        value: inout Value,
+        nextValue: () -> Value
+    ) {
+        value = nextValue()
+    }
+}
+
 struct StripedFillComplication: View {
+    
+    struct RotationNodeOffsetData {
+        let offset: CGSize
+        let scale: Double
+        let scaledWidth: Double
+    }
     
     struct RotationNodeData {
         let angle: Double
         let size: CGSize
+        
+        let alignment: Alignment
         
         let xAxis: Double
         let yAxis: Double
@@ -20,13 +46,15 @@ struct StripedFillComplication: View {
         
         let perspective: Double
         
-        init( _ size: CGSize, at angle: Double = 0, perspective: Double = 0, x: Double = 0, y: Double = 0, z: Double = 0 ) {
+        init( _ size: CGSize, at angle: Double = 0, perspective: Double = 1, alignment: Alignment = .leading, x: Double = 0, y: Double = 0, z: Double = 0 ) {
             self.angle = angle
             self.size = size
             self.perspective = perspective
             self.xAxis = x
             self.yAxis = y
             self.zAxis = z
+            
+            self.alignment = alignment == .leading ? .leading : .trailing
         }
         
         func getScaleForNextNode() -> Double {
@@ -46,36 +74,129 @@ struct StripedFillComplication: View {
     }
     
     var nodes: [RotationNodeData] { [ .init(CGSize(width: 100, height: 100), at: rotation, y: 1),
-                                      /*.init(CGSize(width: 250, height: 100))*/ ] }
+                                      .init(CGSize(width: 200, height: 100), at: 45, perspective: 0, alignment: .trailing, y: 1) ] }
     
     @State private var rotation: Double = 45
     
     private struct RotationNodeView: View {
         
+        
         var data: RotationNodeData
-        let offset: CGSize
-        let scale: Double
+        let index: Int
+        let offsetData: RotationNodeOffsetData
+        
+        @Binding var preferences: [Int: RotationNodeOffsetData]
+        
+        @State private var scaledWidth: Double = 0
+    
+        
+        private var perspectiveDir: Double {
+            if data.perspective == 0 { return 1 }
+            return abs(data.perspective) / data.perspective
+        }
+        
+        private var alignmentDir: Double {
+            data.alignment == .leading ? 1 : -1
+        }
+        
+        private var horizontalOffset: Double {
+            data.alignment == .leading ? 0 : -200
+        }
         
         var body: some View {
-            Rectangle()
-                .opacity(0.5)
-//                .foregroundStyle( Color(red: Double.random(in: 0...1),
-//                                        green: Double.random(in: 0...1),
-//                                        blue: Double.random(in: 0...1)) )
+            GeometryReader { geo in
+                Rectangle()
+                
+                    .opacity(0.5)
+    //                .foregroundStyle( Color(red: Double.random(in: 0...1),
+    //                                        green: Double.random(in: 0...1),
+    //                                        blue: Double.random(in: 0...1)) )
+                    .border(.red)
+                
+                    
+                
+                    .rotation3DEffect(
+                        .init(degrees: alignmentDir * data.angle),
+                        axis: (x: data.xAxis, y: data.yAxis, z: data.zAxis),
+                        anchor: .init(x: data.alignment == .leading ? 0 : 1, y: 0.5 - data.perspective),
+                        perspective: 1
+                    )
+                
+                    .offset(x: horizontalOffset)
+                    
+                    .scaleEffect(offsetData.scale, anchor: .leading)
+                    
+                    .offset(.init(width: offsetData.offset.width, height: offsetData.offset.height * perspectiveDir))
+                
+                    
+                
+//                for reading the height data
+                Rectangle()
+                
+                    .opacity(0)
+    //                .foregroundStyle( Color(red: Double.random(in: 0...1),
+    //                                        green: Double.random(in: 0...1),
+    //                                        blue: Double.random(in: 0...1)) )
+//                    .border(.red)
+                    .scaleEffect(offsetData.scale, anchor: .leading)
+//                    .offset(offsetData.offset)
             
-                .coordinateSpace(name: "test")
-                .border(.red)
-            
+                    .anchorPreference(key: RotationNodePreferenceKey.self,
+                                      value: .bounds, transform: { anchor in
+                        
+                        let bounds = geo[anchor]
+                        
+                        return [ index: .init(interiorBounds: bounds, anchor: anchor) ]
+                    })
+                     
+                
+                    .rotation3DEffect(
+                        .init(degrees: data.angle),
+                        axis: (x: data.xAxis, y: data.yAxis, z: data.zAxis),
+                        anchor: .init(x: 0, y: 1.5),
+                        perspective: 1
+                    )
+            }
+
                 .frame(width: data.size.width, height: data.size.height)
-                .rotation3DEffect(
-                    .init(degrees: data.angle),
-                    axis: (x: data.xAxis, y: data.yAxis, z: data.zAxis),
-                    anchor: .init(x: 0, y: 0.5 - data.perspective),
-                    perspective: 1
-                )
-                .scaleEffect(scale, anchor: .leading)
-                .offset(offset)
                 .border(.blue)
+                .onPreferenceChange(RotationNodePreferenceKey.self) { value in
+                
+                    if self.index == 1 {
+                        print(value[1]?.interiorBounds.width)
+                        
+                        self.scaledWidth = value[1]!.interiorBounds.width
+                        
+                    }
+                    
+                }
+            
+                .overlayPreferenceValue(RotationNodePreferenceKey.self, { value in
+                    
+                    Rectangle()
+                        .stroke(.purple)
+//                        .stroke()
+                        .frame(
+                            
+                            width: value[index]?.interiorBounds.width,
+                            height: value[index]?.interiorBounds.height
+                        )
+                        .offset(
+                            x: value[index]?.interiorBounds.minX ?? 0,
+                            y: value[index]?.interiorBounds.minY ?? 0
+                        )
+                  
+//                    Rectangle()
+//                        .frame(width: 100, height: 100)
+//                        .opacity(0.5)
+//                        .rotation3DEffect(
+//                            .init(degrees: data.angle),
+//                            axis: (x: data.xAxis, y: data.yAxis, z: data.zAxis),
+//                            anchor: .init(x: 0.5, y: 0.5 - data.perspective),
+//                            perspective: 1
+//                        )
+                    
+                })
         }
         
     }
@@ -83,24 +204,7 @@ struct StripedFillComplication: View {
 //    @State private var rotation = 0.0
        @State private var perspective = 1.0
     
-    private struct TestLine: Shape {
-        
-        let angle: Double
-        func path(in rect: CGRect) -> Path {
-            
-            Path { path in
-                path.move(to: .init(x: rect.minX, y: rect.minY))
-                
-                let angle = (Double.pi * angle) / 180
-                let x = 300 * cos(angle)
-                let y = 300 * sin(angle)
-                
-                path.addLine(to: .init(x: rect.minX + x, y: rect.minY + y))
-                
-            }
-        }
-    }
-    
+    @State private var preferences: [ Int: RotationNodeOffsetData ] = [:]
     
     var body: some View {
         
@@ -126,7 +230,7 @@ struct StripedFillComplication: View {
             
             Text("\(rotation)")
             
-            ZStack(alignment: .topLeading) {
+            ZStack(alignment: .leading) {
             
                 
 //                Rectangle()
@@ -143,37 +247,96 @@ struct StripedFillComplication: View {
                 
                 ForEach( nodes.indices, id: \.self ) { i in
                     
-                    if i == 0 {
-                        RotationNodeView(data: nodes[i], offset: .init(width: 0, height: 0), scale: 1)
-                            .overlay {
-                                GeometryReader { geo in
-                                    
-                                    let frame = geo.frame(in: .named("test"))
-                                    
-                                    Rectangle()
-                                        .frame(width: frame.width, height: 10)
-                                    
-                                    
-                                }
-                                .border(.green)
-                            }
-                        
-                    } else {
-                        let previousNode = nodes[i - 1]
-                        let scale = previousNode.getScaleForNextNode()
-                        let offset = previousNode.getOffsetForNextNode()
-                        
-                        RotationNodeView(data: nodes[i], offset: .init(width: offset, height: 0), scale: 1)
-                    }
+                    let offset = preferences[i - 1]?.offset
+                    let scale = preferences[i - 1]?.scale ?? 1
+                    
+//                    let _ = print( i, preferences[i]?.height )
+                    
+                    RotationNodeView(data: nodes[i],
+                                     index: i,
+                                     offsetData: preferences[i - 1] ?? .init(offset: .zero,
+                                                                         scale: 1,
+                                                                         scaledWidth: 1),
+                                     preferences: $preferences)
+                    
+//                    if i == 0 {
+//                        
+//                            .overlay {
+//                                GeometryReader { geo in
+//                                    
+//                                    let frame = geo.frame(in: .named("test"))
+//                                    
+//                                    Rectangle()
+//                                        .frame(width: frame.width, height: 10)
+//                                    
+//                                    
+//                                }
+//                                .border(.green)
+//                            }
+//                        
+//                    } else {
+//                        let previousNode = nodes[i - 1]
+//                        let scale = previousNode.getScaleForNextNode()
+//                        let offset = previousNode.getOffsetForNextNode()
+//                        
+//                        RotationNodeView(data: nodes[i], offset: .init(width: offset, height: 0), scale: 1)
+//                    }
                     
                     
                         
                 }
+                .offset(x: 41.42135623730951 / 2 + 100, y: 0)
+                .onPreferenceChange(RotationNodePreferenceKey.self) { values in
+                    
+                    let newPreferences: [ Int: RotationNodeOffsetData ] = values.mapValues { storedBounds in
+                        
+                        let interiorBounds = storedBounds.interiorBounds
+                        let exteriorBounds = geo[ storedBounds.anchor ]
+                        
+                        let offset = exteriorBounds.width
+                        
+//                        let difference = (interiorBounds.height - exteriorBounds.height) / 2
+//                        let ratio = difference / (interiorBounds.width - offset / 2)
+//                        let scaledDifference = ratio * offset * 2 + 5
+//                        let scale = (exteriorBounds.height - scaledDifference) / exteriorBounds.height
+                        
+                        let difference = interiorBounds.height - 100
+                        let scale = ( 100 - (difference * 2) ) / 100
+                        
+                        
+                        
+//                        print( offset, scale, interiorBounds.width )
+                        
+                        
+                        
+                        return .init(offset: .init(width: offset, height: -difference * 2), scale: scale, scaledWidth: exteriorBounds.width)
+                    }
+                    
+                    self.preferences = newPreferences
+                    
+                }
                 
-                Circle()
+                Rectangle()
                     .foregroundColor(.red)
-                    .frame(width: 5, height: 5  )
-                    .offset(x: 50, y: 10)
+                    .frame(width: 1, height: 198.48077530122103  )
+                    .offset(x: 8.748866352592415, y: 0)
+                
+                Rectangle()
+                    .foregroundColor(.red)
+                    .frame(width: -41.42135623730951 / 2 + 100, height: 1 )
+                    .offset(x: 41.42135623730951, y: 0)
+                
+                
+                Rectangle()
+                    .foregroundStyle(.green)
+                    .frame(width: 1, height: 36.93980625181293 / 2)
+                    .offset(x: 41.42135623730951 * 1.5 + 100, y: 0)
+                
+                Rectangle()
+                    .foregroundColor(.red)
+                    .frame(width: 1, height: 100 *  0.5806019374818707 )
+                    .offset(x: 41.42135623730951 * 1.5 + 100, y: 0)
+                
 //                Rectangle()
 //                    .frame(width: 50, height: 50)
 //                    .foregroundStyle(.blue)
@@ -227,7 +390,8 @@ struct BoundsPreferenceKey: PreferenceKey {
 struct ExampleView: View {
     var body: some View {
         ZStack {
-            Text("Hello World !!!")
+            Rectangle()
+                .frame(width: 200, height: 200)
                 .padding()
                 .border(.red)
             
@@ -270,6 +434,6 @@ struct ExampleView: View {
 
 #Preview {
     
-    ExampleView()
+    StripedFillComplication()
     
 }
