@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 //MARK: ModularRibbon
-struct ModularRibbon: View {
+struct ModularRibbon<C: View>: View {
     
     
 //    MARK: RotationNodePreferenceKey
@@ -39,63 +39,68 @@ struct ModularRibbon: View {
 //    The individual attributes of a node
     struct RotationNodeData {
         let angle: Double
-        let size: CGSize
+        let width: Double
         
         let alignment: Alignment
-        
-        let xAxis: Double
-        let yAxis: Double
-        let zAxis: Double
-        
         let perspective: Double
         
-        init( _ size: CGSize, at angle: Double = 0, perspective: Double = 1, alignment: Alignment = .leading, x: Double = 0, y: Double = 0, z: Double = 0 ) {
+        
+//        depending on the perspective, certain offsets need to be inverted
+        var perspectiveDir: Double {
+            if perspective == 0 { return 1 }
+            return abs(perspective) / perspective
+        }
+        
+//        depending on the alignment guide, the angle needs to be inverted
+        var alignmentDir: Double { alignment == .leading ? 1 : -1 }
+        
+        
+        init( in width: Double, at angle: Double = 0, perspective: Double = 1, alignment: Alignment = .leading ) {
             self.angle = angle
-            self.size = size
+            self.width = width
             self.perspective = perspective
-            self.xAxis = x
-            self.yAxis = y
-            self.zAxis = z
             
             self.alignment = alignment == .leading ? .leading : .trailing
         }
     }
     
 //    MARK: RotationNode View
-    private struct RotationNodeView: View {
+    private struct RotationNodeView<T: View>: View {
         
-        var data: RotationNodeData
         let index: Int
+        let height: Double
+        let perspective: Double
+        var data: RotationNodeData
         let offsetData: RotationNodeOffsetData
-            
-//        depending on the perspective, certain offsets need to be inverted
-        private var perspectiveDir: Double {
-            if data.perspective == 0 { return 1 }
-            return abs(data.perspective) / data.perspective
+        
+        let content: T
+        
+        init( _ index: Int, data: RotationNodeData, offsetData: RotationNodeOffsetData, perspective: Double, height: Double ) {
+            self.index = index
+            self.data = data
+            self.offsetData = offsetData
+            self.perspective = perspective
+            self.height = height
         }
         
-//        depending on the alignment guide, the angle needs to be inverted
-        private var alignmentDir: Double { data.alignment == .leading ? 1 : -1 }
-        
 //        depending on the alignment guide, the offset changes
-        private var horizontalOffset: Double { data.alignment == .leading ? 0 : -data.size.width }
+        private var horizontalOffset: Double { data.alignment == .leading ? 0 : -data.width }
         
         var body: some View {
             GeometryReader { geo in
                 Rectangle()
                     .opacity(0.5)
-                    .border(.red)
                 
                     .rotation3DEffect(
-                        .init(degrees: alignmentDir * data.angle),
-                        axis: (x: data.xAxis, y: data.yAxis, z: data.zAxis),
+                        .init(degrees: data.alignmentDir * data.angle),
+                        axis: (x: 0, y: 1, z: 0),
                         anchor: .init(x: data.alignment == .leading ? 0 : 1, y: 0.5 - data.perspective),
-                        perspective: 0.5
+                        perspective: perspective
                     )
                 
                     .offset(x: horizontalOffset)
                     .scaleEffect(offsetData.scale, anchor: .leading)
-                    .offset(.init(width: offsetData.offset.width, height: offsetData.offset.height * perspectiveDir))
+                    .offset(.init(width: offsetData.offset.width, height: offsetData.offset.height * data.perspectiveDir))
                 
 //                for reading the height data
                 Rectangle()
@@ -107,63 +112,118 @@ struct ModularRibbon: View {
                      
                     .rotation3DEffect(
                         .init(degrees: data.angle),
-                        axis: (x: data.xAxis, y: data.yAxis, z: data.zAxis),
+                        axis: (x: 0, y: 1, z: 0),
                         anchor: .init(x: 0, y: 1.5),
-                        perspective: 0.5
+                        perspective: perspective
                     )
             }
-                .frame(width: data.size.width, height: data.size.height)
-                .border(.blue)
+                .frame(width: data.width, height: height)
         }
     }
     
     
 //    MARK: Ribbon Vars
-    var nodes: [RotationNodeData] { [ .init(CGSize(width: 100, height: 100), at: rotation, y: 1),
-                                      .init(CGSize(width: 200, height: 100), at: 45, perspective: 0, alignment: .trailing, y: 1) ] }
+    var nodes: [RotationNodeData] { [ .init(in: 320, at: rotation, perspective: 3),
+                                      .init(in: 350, at: 45, perspective: 5, alignment: .leading),
+                                      .init(in: 250, at: 20, perspective: 7, alignment: .trailing),
+                                      .init(in: 350, at: 20, perspective: 1, alignment: .leading),
+                                      .init(in: 450, at: 20, perspective: 8, alignment: .trailing)] }
+    
     
     @State private var rotation: Double = 45
     @State private var preferences: [ Int: RotationNodeOffsetData ] = [:]
     
+    @State private var preferencesLoaded: Int = 0
+    
+    let height: Double = 100
+    let perspective: Double = 0.3
+    
 //    take in the bound capture from the preference key and create the offset and scale
-    private func makeOffsetData( in bounds: CGRect ) -> RotationNodeOffsetData {
+//    the bounds are the recorded by the preference key invisibly overlayed on the rotation node
+//    the index is the node that you are making the offset data for (this function needs its perspective data)
+//    to correctly calculate the veritcal offset
+    private func makeOffsetData( in bounds: CGRect, for index: Int, previousScale: Double ) -> RotationNodeOffsetData {
         let offset = bounds.width
         
-        let difference = bounds.height - 100
-        let scale = ( 100 - (difference * 2) ) / 100
+        let difference = bounds.height - height
+        let scale = ( height - (difference * 2) ) / height
+        let perspective = nodes[index].perspective
+
+        return .init(offset: .init(width: offset, height: -difference * 2 * perspective * previousScale ), scale: scale)
+    }
+    
+    private func flattenPreferences( for i: Int ) -> RotationNodeOffsetData {
         
-        return .init(offset: .init(width: offset, height: -difference * 2), scale: scale)
+        if i == 0 { return .init(offset: .zero, scale: 1) }
+        
+        var scale: Double = 1
+        var offset: CGSize = .zero
+        
+        for j in 0...(i - 1) {
+            if let preference = preferences[j] {
+                
+                let node = nodes[j]
+                
+                offset.width += (preference.offset.width * scale * node.alignmentDir)
+                offset.height += (preference.offset.height * node.perspectiveDir)
+                
+                scale *= preference.scale
+            }
+        }
+        
+        return .init(offset: offset, scale: scale)
+        
     }
     
     
 //    MARK: Ribbon Body
     var body: some View {
     
-        VStack {
+        GeometryReader { geo in
             VStack(alignment: .leading) {
-                Text("\(rotation)")
-                
-                Slider(value: $rotation, in: 0...90)
-            }
-            
-            Spacer()
-            
-            ZStack(alignment: .leading) {
-                
-                ForEach( nodes.indices, id: \.self ) { i in
+                VStack(alignment: .leading) {
+                    Text("\(rotation)")
                     
-                    let preference = preferences[i - 1] ?? .init(offset: .zero, scale: 1)
-                    
-                    RotationNodeView(data: nodes[i], index: i, offsetData: preference)
-                    
+                    Slider(value: $rotation, in: 0...90)
                 }
-                .onPreferenceChange(RotationNodePreferenceKey.self) { values in
-                    let newPreferences: [ Int: RotationNodeOffsetData ] = values.mapValues { makeOffsetData(in: $0) }
-                    self.preferences = newPreferences
+                
+                Spacer()
+                
+                ZStack(alignment: .leading) {
+                    
+                    ForEach( 0...min(preferencesLoaded, nodes.count - 1), id: \.self ) { i in
+                        
+                        let preference = flattenPreferences(for: i)
+                        
+                        RotationNodeView( index: i,
+                                          height: height,
+                                          perspective: perspective,
+                                          data: nodes[i],
+                                          offsetData: preference)
+
+                    }
+                    .onPreferenceChange(RotationNodePreferenceKey.self) { values in
+                        
+                        var newPreferences: [Int: RotationNodeOffsetData] = [:]
+                        for key in 0...nodes.count - 1 {
+                            if let bound = values[key] {
+                                
+                                preferencesLoaded += 1
+                                
+                                let test = flattenPreferences(for: key).scale
+                                
+                                var offsetData = makeOffsetData(in: bound, for: key, previousScale: test)
+                                
+                                newPreferences[key] = offsetData
+                            }
+                        }
+                        
+                        self.preferences = self.preferences.merging( newPreferences ) { ( current, new ) in new }
+                    }
                 }
+                
+                Spacer()
             }
-            
-            Spacer()
         }
         .padding()
     }
