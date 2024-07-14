@@ -188,7 +188,7 @@ extension View {
 //MARK: TestView
 struct TestView: View {
     
-    @State private var angle: Double = 96
+    @State private var angle: Double = 90
     
     @State private var secondaryAngle: Double = 0
     @State private var color: Color = .red
@@ -228,10 +228,9 @@ struct TestView: View {
                     Spacer()
                 }
             }
-            .stripedMask(at: angle, width: 2, spacing: 3, maskOpacity: 0.95)
-            .stripedMask(at: secondaryAngle, width: 25, spacing: 5, maskOpacity: 0.7)
+            .stripedMask(at: 90, width: 5, spacing: 3, maskOpacity: 0.95)
             
-            .stripedFill(at: 45, width: 5, opacity: 0.02)
+            .stripedFill(at: 90, width: 2, spacing: 6, opacity: 0.1)
             .ignoresSafeArea()
         }
     }

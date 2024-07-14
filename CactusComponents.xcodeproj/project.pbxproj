@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		C951876C2C3EE7FF00419E3A /* RadialLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876B2C3EE7FF00419E3A /* RadialLines.swift */; };
 		C95187702C3F349F00419E3A /* StripedFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876E2C3F0E2C00419E3A /* StripedFill.swift */; };
-		C97C9C812C405683000D333F /* StripedFillComplications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97C9C802C405683000D333F /* StripedFillComplications.swift */; };
+		C97C9C812C405683000D333F /* ModularRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97C9C802C405683000D333F /* ModularRibbon.swift */; };
 		C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */; };
 		C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C082C227DD4003A7737 /* LoadingWave.swift */; };
 		C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */; };
@@ -21,6 +21,7 @@
 		C9A02C272C2294F9003A7737 /* SlidingModalPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C242C2294F9003A7737 /* SlidingModalPreview.swift */; };
 		C9A02C282C2294F9003A7737 /* SlidingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C252C2294F9003A7737 /* SlidingModal.swift */; };
 		C9A02C2A2C232B6C003A7737 /* ComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C292C232B6C003A7737 /* ComponentView.swift */; };
+		C9B4629C2C4349F9001A729A /* InteriorGlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B4629B2C4349F9001A729A /* InteriorGlow.swift */; };
 		C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */; };
 		C9BF0AB32C21C45200D7DEAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB22C21C45200D7DEAC /* ContentView.swift */; };
 		C9BF0AB52C21C45800D7DEAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BF0AB42C21C45800D7DEAC /* Assets.xcassets */; };
@@ -55,7 +56,7 @@
 /* Begin PBXFileReference section */
 		C951876B2C3EE7FF00419E3A /* RadialLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialLines.swift; sourceTree = "<group>"; };
 		C951876E2C3F0E2C00419E3A /* StripedFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripedFill.swift; sourceTree = "<group>"; };
-		C97C9C802C405683000D333F /* StripedFillComplications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripedFillComplications.swift; sourceTree = "<group>"; };
+		C97C9C802C405683000D333F /* ModularRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularRibbon.swift; sourceTree = "<group>"; };
 		C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingBlur.swift; sourceTree = "<group>"; };
 		C9A02C082C227DD4003A7737 /* LoadingWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWave.swift; sourceTree = "<group>"; };
 		C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardPreview.swift; sourceTree = "<group>"; };
@@ -67,6 +68,7 @@
 		C9A02C242C2294F9003A7737 /* SlidingModalPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingModalPreview.swift; sourceTree = "<group>"; };
 		C9A02C252C2294F9003A7737 /* SlidingModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingModal.swift; sourceTree = "<group>"; };
 		C9A02C292C232B6C003A7737 /* ComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentView.swift; sourceTree = "<group>"; };
+		C9B4629B2C4349F9001A729A /* InteriorGlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteriorGlow.swift; sourceTree = "<group>"; };
 		C9BF0AAD2C21C45200D7DEAC /* CactusComponents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CactusComponents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusComponentsApp.swift; sourceTree = "<group>"; };
 		C9BF0AB22C21C45200D7DEAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -122,7 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				C951876E2C3F0E2C00419E3A /* StripedFill.swift */,
-				C97C9C802C405683000D333F /* StripedFillComplications.swift */,
+				C97C9C802C405683000D333F /* ModularRibbon.swift */,
+				C9B4629B2C4349F9001A729A /* InteriorGlow.swift */,
 			);
 			path = Fills;
 			sourceTree = "<group>";
@@ -395,13 +398,14 @@
 				C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */,
 				C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */,
 				C9BF0AE32C21C5C600D7DEAC /* CactusComponent.swift in Sources */,
-				C97C9C812C405683000D333F /* StripedFillComplications.swift in Sources */,
+				C97C9C812C405683000D333F /* ModularRibbon.swift in Sources */,
 				C9A02C2A2C232B6C003A7737 /* ComponentView.swift in Sources */,
 				C9A02C1E2C2291AF003A7737 /* CardTemplateView.swift in Sources */,
 				C9A02C1F2C2291AF003A7737 /* ScrollingCardView.swift in Sources */,
 				C95187702C3F349F00419E3A /* StripedFill.swift in Sources */,
 				C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */,
 				C951876C2C3EE7FF00419E3A /* RadialLines.swift in Sources */,
+				C9B4629C2C4349F9001A729A /* InteriorGlow.swift in Sources */,
 				C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */,
 				C9A02C1D2C2291AF003A7737 /* UIConstants.swift in Sources */,
 				C9A02C212C2291B7003A7737 /* StyledScrollView.swift in Sources */,
