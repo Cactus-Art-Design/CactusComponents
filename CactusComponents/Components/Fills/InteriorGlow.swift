@@ -10,30 +10,34 @@ import SwiftUI
 
 struct InteriorGlow: View {
     
+//    MARK: Line
     private struct Line: Shape {
-
-        let horizontalAlignment1: Alignment
-        let verticalAlignment1: Alignment
-        
-        let horizontalAlignment2: Alignment
-        let verticalAlignment2: Alignment
+        let radius: Double
         
         func path(in rect: CGRect) -> Path {
             Path{ path in
                 
-                path.move(to: .init(x: horizontalAlignment1 == .leading ? rect.minX : rect.maxX,
-                                    y: verticalAlignment1 == .bottom ? rect.maxY : rect.minY))
+                path.addArc(center: .init(x: rect.minX + radius, y: rect.maxY - radius),
+                            radius: radius,
+                            startAngle: .init(degrees: 90),
+                            endAngle: .init(degrees: 180), clockwise: false)
                 
                 
-                path.addLine(to: .init(x: horizontalAlignment2 == .leading ? rect.minX : rect.maxX,
-                                    y: verticalAlignment2 == .bottom ? rect.maxY : rect.minY))
+                path.move(to: .init(x: rect.minX, y: rect.maxY - radius))
+                path.addLine(to: .init(x: rect.minX, y: rect.minY + radius))
+                
+                path.addArc(center: .init(x: rect.minX + radius, y: rect.minY + radius),
+                            radius: radius,
+                            startAngle: .init(degrees: 180),
+                            endAngle: .init(degrees: 270), clockwise: false)
+                
             }
         }
     }
     
+//    MARK: MakeLine
     @ViewBuilder
-    private func makeLine( horizontalAlignment1: Alignment, verticalAlignment1: Alignment,
-                           horizontalAlignment2: Alignment, verticalAlignment2: Alignment,
+    private func makeLine( rotation: Double,
                            primaryBlur: Double? = nil,
                            secondaryBlur: Double? = nil,
                            lineWidth: Double? = nil,
@@ -41,65 +45,87 @@ struct InteriorGlow: View {
         
         ZStack {
             
-            Line(horizontalAlignment1: horizontalAlignment1, verticalAlignment1: verticalAlignment1,
-                 horizontalAlignment2: horizontalAlignment2, verticalAlignment2: verticalAlignment2)
-            
+            Line(radius: radius)
             .stroke(lineWidth: lineWidth == nil ? self.lineWidth : lineWidth!)
             .blur(radius: primaryBlur == nil ? self.primaryBlur : primaryBlur!)
             .opacity(0.5)
             
-            Line(horizontalAlignment1: horizontalAlignment1, verticalAlignment1: verticalAlignment1,
-                 horizontalAlignment2: horizontalAlignment2, verticalAlignment2: verticalAlignment2)
+            Line(radius: radius)
+                .stroke(lineWidth: secondarLineWidth == nil ? self.secondarLineWidth : secondarLineWidth!)
+                .blur(radius: secondaryBlur == nil ? self.secondaryBlur: secondaryBlur!)
             
-            .stroke(lineWidth: secondarLineWidth == nil ? self.secondarLineWidth : secondarLineWidth!)
-            .blur(radius: secondaryBlur == nil ? self.secondaryBlur: secondaryBlur!)
+            Line(radius: radius)
+                .stroke(lineWidth: 2)
+//                .blur(radius: 5)
         }
+        .rotationEffect(.init(degrees: rotation))
         
     }
+    
+//    MARK: Vars
+    let radius: Double = 20
     
     let primaryBlur: Double = 35
     let secondaryBlur: Double = 10
     
     let lineWidth: Double = 30
-    let secondarLineWidth: Double = 10
+    let secondarLineWidth: Double = 15
     
+//    MARK: Body
     var body: some View {
         
         let secondaryColor = Color(red: 255/255, green: 240/255, blue: 209/255 )
      
+//        Slider(value: $radius, in: 0...50)
+        
         Rectangle()
             .frame(width: 200, height: 200)
             .opacity(0.1)
         
             .overlay {
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(lineWidth: 3)
                 
-                
-                makeLine(horizontalAlignment1: .leading, verticalAlignment1: .bottom,
-                         horizontalAlignment2: .leading, verticalAlignment2: .top)
+                makeLine(rotation: 0)
                 .foregroundStyle(secondaryColor)
                 
-                makeLine(horizontalAlignment1: .leading, verticalAlignment1: .top,
-                         horizontalAlignment2: .trailing, verticalAlignment2: .top)
-                .foregroundStyle(secondaryColor)
+                makeLine(rotation: 90)
+                    .foregroundStyle(secondaryColor)
                 
-                makeLine(horizontalAlignment1: .trailing, verticalAlignment1: .bottom,
-                         horizontalAlignment2: .trailing, verticalAlignment2: .top)
+                makeLine(rotation: 180)
                 
-                makeLine(horizontalAlignment1: .trailing, verticalAlignment1: .bottom,
-                         horizontalAlignment2: .leading, verticalAlignment2: .bottom)
-             
-                
+                makeLine(rotation: -90)
                 
             }
-            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .clipShape(RoundedRectangle(cornerRadius: radius))
+    }
+}
+
+//MARK: InteriorGlowTestView
+
+struct InteriorGlowTestView: View {
+    
+    let radius: Double = 20
+    
+    let primaryBlur: Double = 35
+    let secondaryBlur: Double = 10
+    
+    let lineWidth: Double = 30
+    let secondarLineWidth: Double = 15
+    
+    var body: some View {
+        
+        
+        Text("Hello World!")
+            .font(.title)
+            .bold()
+        
+        Text("This is a simple effect!")
+        
         
     }
 }
 
 #Preview {
     
-    InteriorGlow()
+    InteriorGlowTestView()
     
 }
