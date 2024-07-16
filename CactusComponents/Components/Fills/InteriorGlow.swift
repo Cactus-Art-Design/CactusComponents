@@ -25,11 +25,6 @@ struct InteriorGlow: ViewModifier {
                 
                 path.move(to: .init(x: rect.minX, y: rect.maxY - radius))
                 path.addLine(to: .init(x: rect.minX, y: rect.minY + radius))
-                
-                path.addArc(center: .init(x: rect.minX + radius, y: rect.minY + radius),
-                            radius: radius,
-                            startAngle: .init(degrees: 180),
-                            endAngle: .init(degrees: 270), clockwise: false)
             }
         }
         
@@ -43,11 +38,6 @@ struct InteriorGlow: ViewModifier {
                 
                 path.move(to: .init(x: rect.minX + radius, y: rect.minY))
                 path.addLine(to: .init(x: rect.maxX - radius, y: rect.minY))
-                
-                path.addArc(center: .init(x: rect.maxX - radius, y: rect.minY + radius),
-                            radius: radius,
-                            startAngle: .init(degrees: -90),
-                            endAngle: .init(degrees: 0), clockwise: false)
             }
         }
         
@@ -78,7 +68,7 @@ struct InteriorGlow: ViewModifier {
             
             Line(radius: radius, vertical: (rotation == .left || rotation == .right) ? true : false )
                 .stroke(lineWidth: 2)
-//                .blur(radius: 5)
+                .opacity(opacity)
         }
         .rotationEffect(.init(degrees: rotation == .right || rotation == .bottom ? 180 : 0))
         
@@ -99,6 +89,8 @@ struct InteriorGlow: ViewModifier {
     
     let lineWidth: Double
     let secondarLineWidth: Double
+    
+    let opacity: Double
     
 //    MARK: Body
     func body(content: Content) -> some View {
@@ -134,19 +126,32 @@ extension View {
                       primaryBlur: Double = 35,
                       secondaryBlur: Double = 10,
                       lineWidth: Double = 30,
-                      secondaryLineWidth: Double = 15) -> some View {
+                      secondaryLineWidth: Double = 15,
+                      opacity: Double = 1) -> some View {
         
         modifier(InteriorGlow(radius: radius,
                               primaryBlur: primaryBlur,
                               secondaryBlur: secondaryBlur,
                               lineWidth: lineWidth,
-                              secondarLineWidth: secondaryLineWidth))
+                              secondarLineWidth: secondaryLineWidth,
+                              opacity: opacity))
+    }
+    
+    func interiorGlow( radius: Double, isFocussed: Bool = false ) -> some View {
+        modifier(InteriorGlow(radius: radius,
+                              primaryBlur: isFocussed ? 35 : 40,
+                              secondaryBlur: isFocussed ? 10 : 25,
+                              lineWidth: isFocussed ? 30 : 10,
+                              secondarLineWidth: isFocussed ? 15 : 5,
+                              opacity: isFocussed ? 1 : 0.35))
     }
 }
 
 //MARK: InteriorGlowTestView
 
 struct InteriorGlowTestView: View {
+    
+    let bodyText: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     
     @State private var radius: Double = 20
     
@@ -155,6 +160,8 @@ struct InteriorGlowTestView: View {
     
     @State private var lineWidth: Double = 30
     @State private var secondarLineWidth: Double = 15
+    
+    @State private var selectedContent: Int = 0
     
     @ViewBuilder
     private func makeControl( title: String, value: Binding<Double>, in range: ClosedRange<Double> ) -> some View {
@@ -174,6 +181,7 @@ struct InteriorGlowTestView: View {
         
     }
     
+//    MARK: ContentBuilders
     @ViewBuilder
     private func makeControls() -> some View {
         
@@ -193,31 +201,47 @@ struct InteriorGlowTestView: View {
         
     }
     
+    @ViewBuilder
+    private func makeContent(_ index: Int, title: String, subTitle: String, body: String) -> some View {
+        
+        VStack(alignment: .leading) {
+            HStack { Spacer() }
+            Text(title)
+                .font(.title)
+                .bold()
+            
+            Text(subTitle)
+                .font(.callout)
+                .bold()
+                .padding(.bottom)
+            
+            Text(body)
+                .font(.caption)
+            
+            Spacer()
+        }
+        .padding()
+        .contentShape(Rectangle())
+        .opacity( selectedContent == index ? 1 : 0.4 )
+        .onTapGesture { withAnimation { selectedContent = index } }
+        .interiorGlow(radius: radius, isFocussed: selectedContent == index)
+        
+    }
+    
+//    MARK: Body
     var body: some View {
         
         VStack {
             
             makeControls()
             
-            Spacer()
-            
-            VStack(alignment: .leading) {
-                Text("Hello World!")
-                    .font(.title)
-                    .bold()
+            HStack {
+                makeContent(0, title: "hello", subTitle: "hello world", body: bodyText)
                 
-                Text("This is a simple effect!")
-                    .font(.callout)
-                
-                Spacer()
+                makeContent(1, title: "hello", subTitle: "hello world", body: bodyText)
             }
-            .padding()
-            .frame(width: 300, height: 200)
-            .interiorGlow(in: radius,
-                          primaryBlur: primaryBlur,
-                          secondaryBlur: secondaryBlur,
-                          lineWidth: lineWidth,
-                          secondaryLineWidth: secondarLineWidth)
+            
+            makeContent(2, title: "hello", subTitle: "hello world", body: bodyText)
             
             Spacer()
         }

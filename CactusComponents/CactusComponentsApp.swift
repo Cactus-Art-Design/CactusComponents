@@ -12,7 +12,7 @@ struct CactusComponentsApp: App {
     var body: some Scene {
         WindowGroup {
 //            ContentView()
-            RibbonViewDemo()
+            InteriorGlowTestView()
         }
     }
 }
