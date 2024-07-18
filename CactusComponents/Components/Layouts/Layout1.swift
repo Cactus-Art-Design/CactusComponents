@@ -82,6 +82,13 @@ struct DatingProfileLayout: View {
         }
     }
     
+//    MARK: MakeActionButtons
+    @ViewBuilder
+    private func makeActionButtons() -> some View {
+        
+        
+    }
+    
 //    MARK: MakeOverview
     @ViewBuilder
     private func makeOverview() -> some View {
@@ -111,7 +118,7 @@ struct DatingProfileLayout: View {
             }
             .padding(.bottom)
             
-            Text("About me")
+            Text("About")
                 .textCase(.uppercase)
                 .font(.callout)
                 .opacity(LocalConstants.secondaryFontOpacity)
@@ -163,6 +170,39 @@ struct DatingProfileLayout: View {
         }
     }
     
+//    MARK: MakeBody
+    @ViewBuilder
+    private func makeQuestionAndAnswer(question: String, body: String) -> some View {
+        VStack(alignment: .leading) {
+            Text( question )
+                .font(.title3)
+                .bold()
+            
+            Text( body )
+                .font(.callout)
+        }
+        .padding(.horizontal)
+        .padding()
+        .background {
+            RoundedRectangle(cornerRadius: 30)
+                .stroke(lineWidth: 1)
+        }
+    }
+    
+    @ViewBuilder
+    private func makeBody() -> some View {
+        
+        VStack(alignment: .leading) {
+            Text("get to know Brian")
+                .font(.callout)
+                .textCase(.uppercase)
+                .opacity(LocalConstants.secondaryFontOpacity)
+                .padding(.bottom)
+            
+            makeQuestionAndAnswer(question: "Favorite Activity", body: bodyText)
+        }
+    }
+    
     
 //    MARK: Body
     var body: some View {
@@ -179,8 +219,12 @@ struct DatingProfileLayout: View {
                 
                 VStack {
                     makeOverview()
+                        .padding(.bottom)
                     
                     makeStats()
+                        .padding(.bottom)
+                    
+                    makeBody()
                 }
                 .padding()
                 
