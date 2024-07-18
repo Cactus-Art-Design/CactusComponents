@@ -23,6 +23,7 @@
 		C9A02C2A2C232B6C003A7737 /* ComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C292C232B6C003A7737 /* ComponentView.swift */; };
 		C9B4629C2C4349F9001A729A /* InteriorGlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B4629B2C4349F9001A729A /* InteriorGlow.swift */; };
 		C9B462AA2C48B85B001A729A /* Layout1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B462A92C48B85B001A729A /* Layout1.swift */; };
+		C9B462AD2C498090001A729A /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C9B462AC2C498090001A729A /* UIUniversals */; };
 		C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */; };
 		C9BF0AB32C21C45200D7DEAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB22C21C45200D7DEAC /* ContentView.swift */; };
 		C9BF0AB52C21C45800D7DEAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BF0AB42C21C45800D7DEAC /* Assets.xcassets */; };
@@ -94,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9B462AD2C498090001A729A /* UIUniversals in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +290,9 @@
 			dependencies = (
 			);
 			name = CactusComponents;
+			packageProductDependencies = (
+				C9B462AC2C498090001A729A /* UIUniversals */,
+			);
 			productName = CactusComponents;
 			productReference = C9BF0AAD2C21C45200D7DEAC /* CactusComponents.app */;
 			productType = "com.apple.product-type.application";
@@ -360,6 +365,9 @@
 				Base,
 			);
 			mainGroup = C9BF0AA42C21C45200D7DEAC;
+			packageReferences = (
+				C9B462AB2C498090001A729A /* XCRemoteSwiftPackageReference "UIUniversals" */,
+			);
 			productRefGroup = C9BF0AAE2C21C45200D7DEAC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -793,6 +801,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C9B462AB2C498090001A729A /* XCRemoteSwiftPackageReference "UIUniversals" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Brian-Masse/UIUniversals";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C9B462AC2C498090001A729A /* UIUniversals */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C9B462AB2C498090001A729A /* XCRemoteSwiftPackageReference "UIUniversals" */;
+			productName = UIUniversals;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C9BF0AA52C21C45200D7DEAC /* Project object */;
 }
