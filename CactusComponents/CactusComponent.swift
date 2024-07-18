@@ -8,6 +8,10 @@
 import Foundation
 import SwiftUI
 
+//MARK: CactusComponent
+//anything that a user can see and interact with is a cactus component
+//there will be different peripherals associated with the component (such as a control view)
+//but the fundemental code that creates the component inherets from this class
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public class CactusComponent: Identifiable {
     public let name: String
@@ -45,6 +49,8 @@ public class CactusComponent: Identifiable {
     }
 }
 
+//MARK: Single Instance
+//this  means that all cactus components have a shared property associated with them
 extension CactusComponent: SingleInstance {
     public static var shared: Self {
         self.init()
@@ -54,3 +60,11 @@ extension CactusComponent: SingleInstance {
 public protocol SingleInstance {
     static var shared: Self {get}
 }
+
+//
+////MARK: CactusComponentController
+//public class CactusComponentControlsViewModel {
+//    
+//    public var makeControlledPreview() -> some View
+//    
+//}

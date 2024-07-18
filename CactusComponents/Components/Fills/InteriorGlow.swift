@@ -153,6 +153,9 @@ struct InteriorGlowTestView: View {
     
     let bodyText: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     
+    @State var dic: Dictionary< String, Binding<Double> > = [:]
+    
+    
     @State private var radius: Double = 20
     
     @State private var primaryBlur: Double = 35
@@ -224,7 +227,8 @@ struct InteriorGlowTestView: View {
         .contentShape(Rectangle())
         .opacity( selectedContent == index ? 1 : 0.4 )
         .onTapGesture { withAnimation { selectedContent = index } }
-        .interiorGlow(radius: radius, isFocussed: selectedContent == index)
+//        .interiorGlow(radius: radius, isFocussed: selectedContent == index)
+        .interiorGlow(in: radius, primaryBlur: 35, secondaryBlur: 10, lineWidth: lineWidth, secondaryLineWidth: dic["test"]?.wrappedValue ?? 0, opacity: 1)
         
     }
     
@@ -235,6 +239,8 @@ struct InteriorGlowTestView: View {
             
             makeControls()
             
+            Text( "\(dic["test"]?.wrappedValue)" )
+            
             HStack {
                 makeContent(0, title: "hello", subTitle: "hello world", body: bodyText)
                 
@@ -242,15 +248,78 @@ struct InteriorGlowTestView: View {
             }
             
             makeContent(2, title: "hello", subTitle: "hello world", body: bodyText)
+                
             
             Spacer()
         }
         .padding()
+        .onAppear {
+            
+            dic["test"] = $secondarLineWidth
+            
+        }
+        .background( .red )
+        .onTapGesture {
+            print("running")
+            print( dic["test"]?.wrappedValue )
+        }
+    }
+}
+
+@propertyWrapper
+struct PrintHello: DynamicProperty {
+    
+    @State var wrappedValue: String {
+        didSet {
+            print("hello world!")
+        }
+    }
+    
+    init( wrappedValue: String ) {
+        self.wrappedValue = wrappedValue
+    }
+    
+}
+
+class DictModel: ObservableObject {
+    @Published var dict: [String: String] = [:]
+    
+    func setKeyValuePair( _ key: String, value: String ) {
+        self.objectWillChange.send()
+        
+        self.dict[key] = value
+    }
+}
+
+struct TestPublishedDidSet: View {
+    @ObservedObject var vm = DictModel()
+    
+    @PrintHello var test: String = "hi"
+
+    var body: some View {
+        VStack {
+            Button("Assign") { self.vm.setKeyValuePair("key", value: "1") }
+            Button("Modify") { self.vm.setKeyValuePair("key", value: "2") }
+            Divider()
+            
+            Text("hi!")
+                .onTapGesture {
+                    test = "whateva"
+                    
+                }
+            
+            Text(test)
+            Text( self.vm.dict["key"] ?? "" )
+            
+           ForEach(Array(self.vm.dict.keys), id: \.self) { key in
+              Text("\(self.vm.dict[key]!)...")
+           }
+        }
     }
 }
 
 #Preview {
     
-    InteriorGlowTestView()
+    TestPublishedDidSet()
     
 }
