@@ -227,99 +227,76 @@ struct InteriorGlowTestView: View {
         .contentShape(Rectangle())
         .opacity( selectedContent == index ? 1 : 0.4 )
         .onTapGesture { withAnimation { selectedContent = index } }
-//        .interiorGlow(radius: radius, isFocussed: selectedContent == index)
-        .interiorGlow(in: radius, primaryBlur: 35, secondaryBlur: 10, lineWidth: lineWidth, secondaryLineWidth: dic["test"]?.wrappedValue ?? 0, opacity: 1)
+        .interiorGlow(radius: radius, isFocussed: selectedContent == index)
+//        .interiorGlow(in: radius, primaryBlur: 35, secondaryBlur: 10, lineWidth: lineWidth, secondaryLineWidth: dic["test"]?.wrappedValue ?? 0, opacity: 1)
         
     }
     
 //    MARK: Body
     var body: some View {
         
-        VStack {
-            
-            makeControls()
-            
-            Text( "\(dic["test"]?.wrappedValue)" )
-            
-            HStack {
-                makeContent(0, title: "hello", subTitle: "hello world", body: bodyText)
+        GeometryReader { geo in
+            ZStack(alignment: .bottom) {
+                VStack(alignment: .leading) {
+                    
+                    Spacer(minLength: geo.size.height * 0.356)
+                    
+                    Text("My Overview")
+                        .textCase(.uppercase)
+                        .opacity(0.7)
+                    
+                    HStack {
+                        makeContent(0, title: "$1456", subTitle: "Primary Account", body: bodyText)
+                        
+                        makeContent(1, title: "¥89772.15", subTitle: "Investment Account", body: bodyText)
+                    }
+                    
+                    makeContent(2, title: "Account History", subTitle: "", body: bodyText)
+                }
+                .overlay {
+                    LinearGradient(colors: [.black, .clear],
+                                   startPoint: .bottom,
+                                   endPoint: .init(x: 0.5, y: 0.75))
+                        .opacity(0.5)
+                        .allowsTightening(false)
+                    
+                    LinearGradient(colors: [.black, .clear],
+                                   startPoint: .bottom,
+                                   endPoint: .init(x: 0.5, y: 0.85))
+                        .opacity(0.5)
+                        .allowsTightening(false)
+                }
                 
-                makeContent(1, title: "hello", subTitle: "hello world", body: bodyText)
+                HStack {
+                    Image( systemName: "doc.text.magnifyingglass" )
+                        .opacity(0.7)
+                    Text("Search")
+                        .opacity(0.7)
+                    Text("Accounts")
+                        .bold()
+                    
+                    Spacer()
+                }
+                .textCase(.uppercase)
+                .padding()
+                .background {
+                    RoundedRectangle(cornerRadius: 50)
+                        .stroke(lineWidth: 2)
+                        .opacity(0.7)
+                    
+                    RoundedRectangle(cornerRadius: 50)
+                        .foregroundStyle(.black)
+                }
+                .padding([.horizontal])
+                .offset(y: 10)
             }
-            
-            makeContent(2, title: "hello", subTitle: "hello world", body: bodyText)
-                
-            
-            Spacer()
         }
         .padding()
-        .onAppear {
-            
-            dic["test"] = $secondarLineWidth
-            
-        }
-        .background( .red )
-        .onTapGesture {
-            print("running")
-            print( dic["test"]?.wrappedValue )
-        }
-    }
-}
-
-@propertyWrapper
-struct PrintHello: DynamicProperty {
-    
-    @State var wrappedValue: String {
-        didSet {
-            print("hello world!")
-        }
-    }
-    
-    init( wrappedValue: String ) {
-        self.wrappedValue = wrappedValue
-    }
-    
-}
-
-class DictModel: ObservableObject {
-    @Published var dict: [String: String] = [:]
-    
-    func setKeyValuePair( _ key: String, value: String ) {
-        self.objectWillChange.send()
-        
-        self.dict[key] = value
-    }
-}
-
-struct TestPublishedDidSet: View {
-    @ObservedObject var vm = DictModel()
-    
-    @PrintHello var test: String = "hi"
-
-    var body: some View {
-        VStack {
-            Button("Assign") { self.vm.setKeyValuePair("key", value: "1") }
-            Button("Modify") { self.vm.setKeyValuePair("key", value: "2") }
-            Divider()
-            
-            Text("hi!")
-                .onTapGesture {
-                    test = "whateva"
-                    
-                }
-            
-            Text(test)
-            Text( self.vm.dict["key"] ?? "" )
-            
-           ForEach(Array(self.vm.dict.keys), id: \.self) { key in
-              Text("\(self.vm.dict[key]!)...")
-           }
-        }
     }
 }
 
 #Preview {
     
-    TestPublishedDidSet()
+    InteriorGlowTestView()
     
 }
