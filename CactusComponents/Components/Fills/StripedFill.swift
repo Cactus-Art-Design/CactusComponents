@@ -185,8 +185,8 @@ extension View {
     }
 }
 
-//MARK: TestView
-struct TestView: View {
+//MARK: LineFillDemoView
+struct LineFillDemoView: View {
     
     @State private var angle: Double = 90
     
@@ -199,44 +199,133 @@ struct TestView: View {
                            blue: Double.random(in: 0...1))
     }
     
+    @ViewBuilder
+    private func makePageDetails() -> some View {
+        VStack {
+            
+            HStack {
+                Text("Reading, MA")
+                Text("Weather")
+                    .bold()
+                    .italic()
+                    .foregroundStyle(.blue)
+                
+                Spacer()
+                
+                Image(systemName: "mountain.2")
+                    .font(.body)
+                    .padding(7)
+                    .background {
+                        RoundedRectangle(cornerRadius: 50)
+                            .aspectRatio(1, contentMode: .fill)
+                            .foregroundStyle(.black)
+                        
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(lineWidth: 1)
+                            .opacity(0.8)
+                    }
+            }
+            .font(.title2)
+         
+            Spacer()
+            
+            HStack {
+                Spacer()
+                Text("View more Details ")
+                Image(systemName: "arrow.down")
+                Spacer()
+            }
+            .font(.title3)
+            .bold()
+            .padding()
+            .background() {
+                RoundedRectangle(cornerRadius: 50)
+                    .foregroundStyle(.black)
+                
+                RoundedRectangle(cornerRadius: 50)
+                    .stroke(lineWidth: 1)
+                    .opacity(0.8)
+            }
+        }
+        .padding()
+    }
+    
+//    MARK: LineFilleDemoFill 1
+    @ViewBuilder
+    private func makeContent1() -> some View {
+        VStack {
+            Circle()
+                .frame(width: 200, height: 200)
+                .foregroundStyle(color)
+                .shadow(color: color, radius: 50)
+            
+            Text("67°")
+                .font(.custom("arial", size:  140))
+                .bold()
+                .fontWeight(.black)
+        }
+    }
+    
+//    MARK: LineFilleDemoFill 1
+    @ViewBuilder
+    private func makeArc(startAngle: Double, endAngle: Double, in geo: GeometryProxy) -> Path {
+        Path { path in
+            path.addArc(center: .init(x: geo.size.width / 2, y: geo.size.height / 2),
+                        radius: 100,
+                        startAngle: .init(degrees: startAngle),
+                        endAngle: .init(degrees: endAngle),
+                        clockwise: false)
+            
+        }
+    }
+    
+    @ViewBuilder
+    private func makeContent2(in geo: GeometryProxy) -> some View {
+        VStack {
+            ZStack {
+                Circle()
+                    .frame(width: 200, height: 200)
+                    .foregroundStyle(.gray.opacity(0.5))
+                
+                Image(systemName: "cloud.drizzle.fill")
+                    .resizable()
+                    .frame(width: 240, height: 240)
+                    .foregroundStyle(.blue)
+                    .shadow(color: .blue.opacity(0.3), radius: 50)
+            }
+            
+            Text("45°")
+                .font(.custom("arial", size:  140))
+                .bold()
+                .fontWeight(.black)
+        }
+    }
+    
+//    MARK: LineFillDemoview Body
     var body: some View {
         
-        VStack {
+        GeometryReader { geo in
             ZStack {
                 VStack {
                     HStack { Spacer() }
                     Spacer()
                     
-                    Circle()
-                        .frame(width: 200, height: 200)
-                        .foregroundStyle(color)
-                        .shadow(color: color, radius: 50)
-                    
-                    Text("52")
-                        .font(.custom("arial", size:  140))
-                        .bold()
-                        .fontWeight(.black)
-                    
-                    HStack {
-                        Text( "Shuffle" )
-                        
-                        Image(systemName: "circle.hexagongrid")
-                    }
-                    .font(.title)
-                    .onTapGesture { withAnimation { shuffleColor() } }
+                    makeContent2(in: geo)
                     
                     Spacer()
                 }
             }
-            .stripedMask(at: 90, width: 5, spacing: 3, maskOpacity: 0.95)
-            
-            .stripedFill(at: 90, width: 2, spacing: 6, opacity: 0.1)
-            .ignoresSafeArea()
+        }
+        .stripedMask(at: 50, width: 2, spacing: 5, maskOpacity: 0.95)
+        .stripedFill(at: 50, width: 1, spacing: 8, opacity: 0.15)
+        .ignoresSafeArea()
+        .overlay {
+            makePageDetails()
         }
     }
 }
 
 #Preview {
 //    RadialLinesControls()
-    TestView()
+    LineFillDemoView()
 }
