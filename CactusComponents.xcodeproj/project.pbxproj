@@ -10,6 +10,7 @@
 		C951876C2C3EE7FF00419E3A /* RadialLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876B2C3EE7FF00419E3A /* RadialLines.swift */; };
 		C95187702C3F349F00419E3A /* StripedFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876E2C3F0E2C00419E3A /* StripedFill.swift */; };
 		C97C9C812C405683000D333F /* ModularRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97C9C802C405683000D333F /* ModularRibbon.swift */; };
+		C995E91E2C4F08B700FD83C5 /* Layout2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E91D2C4F08B700FD83C5 /* Layout2.swift */; };
 		C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */; };
 		C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C082C227DD4003A7737 /* LoadingWave.swift */; };
 		C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */; };
@@ -59,6 +60,7 @@
 		C951876B2C3EE7FF00419E3A /* RadialLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialLines.swift; sourceTree = "<group>"; };
 		C951876E2C3F0E2C00419E3A /* StripedFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripedFill.swift; sourceTree = "<group>"; };
 		C97C9C802C405683000D333F /* ModularRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularRibbon.swift; sourceTree = "<group>"; };
+		C995E91D2C4F08B700FD83C5 /* Layout2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout2.swift; sourceTree = "<group>"; };
 		C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingBlur.swift; sourceTree = "<group>"; };
 		C9A02C082C227DD4003A7737 /* LoadingWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWave.swift; sourceTree = "<group>"; };
 		C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardPreview.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				C9B462A92C48B85B001A729A /* Layout1.swift */,
+				C995E91D2C4F08B700FD83C5 /* Layout2.swift */,
 			);
 			path = Layouts;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C995E91E2C4F08B700FD83C5 /* Layout2.swift in Sources */,
 				C9BF0AB32C21C45200D7DEAC /* ContentView.swift in Sources */,
 				C9BF0AE12C21C50600D7DEAC /* TicketShape.swift in Sources */,
 				C9A02C282C2294F9003A7737 /* SlidingModal.swift in Sources */,
