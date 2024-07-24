@@ -14,6 +14,8 @@
 		C995E9212C51817A00FD83C5 /* CactusCarouselDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E9202C51817A00FD83C5 /* CactusCarouselDemoView.swift */; };
 		C995E9232C5181FF00FD83C5 /* CactusRibbonDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E9222C5181FE00FD83C5 /* CactusRibbonDemoView.swift */; };
 		C995E9262C51829E00FD83C5 /* CactusRadialLinesDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E9252C51829E00FD83C5 /* CactusRadialLinesDemoView.swift */; };
+		C995E9282C51866100FD83C5 /* RadialGlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E9272C51866100FD83C5 /* RadialGlow.swift */; };
+		C995E92B2C5186CC00FD83C5 /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C995E92A2C5186CC00FD83C5 /* UIUniversals */; };
 		C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */; };
 		C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C082C227DD4003A7737 /* LoadingWave.swift */; };
 		C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */; };
@@ -27,7 +29,6 @@
 		C9A02C2A2C232B6C003A7737 /* ComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C292C232B6C003A7737 /* ComponentView.swift */; };
 		C9B4629C2C4349F9001A729A /* InteriorGlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B4629B2C4349F9001A729A /* InteriorGlow.swift */; };
 		C9B462AA2C48B85B001A729A /* Layout1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B462A92C48B85B001A729A /* Layout1.swift */; };
-		C9B462AD2C498090001A729A /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C9B462AC2C498090001A729A /* UIUniversals */; };
 		C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */; };
 		C9BF0AB32C21C45200D7DEAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AB22C21C45200D7DEAC /* ContentView.swift */; };
 		C9BF0AB52C21C45800D7DEAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BF0AB42C21C45800D7DEAC /* Assets.xcassets */; };
@@ -67,6 +68,7 @@
 		C995E9202C51817A00FD83C5 /* CactusCarouselDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusCarouselDemoView.swift; sourceTree = "<group>"; };
 		C995E9222C5181FE00FD83C5 /* CactusRibbonDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusRibbonDemoView.swift; sourceTree = "<group>"; };
 		C995E9252C51829E00FD83C5 /* CactusRadialLinesDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusRadialLinesDemoView.swift; sourceTree = "<group>"; };
+		C995E9272C51866100FD83C5 /* RadialGlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialGlow.swift; sourceTree = "<group>"; };
 		C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingBlur.swift; sourceTree = "<group>"; };
 		C9A02C082C227DD4003A7737 /* LoadingWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingWave.swift; sourceTree = "<group>"; };
 		C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardPreview.swift; sourceTree = "<group>"; };
@@ -103,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9B462AD2C498090001A729A /* UIUniversals in Frameworks */,
+				C995E92B2C5186CC00FD83C5 /* UIUniversals in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +140,7 @@
 			children = (
 				C951876E2C3F0E2C00419E3A /* StripedFill.swift */,
 				C9B4629B2C4349F9001A729A /* InteriorGlow.swift */,
+				C995E9272C51866100FD83C5 /* RadialGlow.swift */,
 			);
 			path = Fills;
 			sourceTree = "<group>";
@@ -319,7 +322,7 @@
 			);
 			name = CactusComponents;
 			packageProductDependencies = (
-				C9B462AC2C498090001A729A /* UIUniversals */,
+				C995E92A2C5186CC00FD83C5 /* UIUniversals */,
 			);
 			productName = CactusComponents;
 			productReference = C9BF0AAD2C21C45200D7DEAC /* CactusComponents.app */;
@@ -394,7 +397,7 @@
 			);
 			mainGroup = C9BF0AA42C21C45200D7DEAC;
 			packageReferences = (
-				C9B462AB2C498090001A729A /* XCRemoteSwiftPackageReference "UIUniversals" */,
+				C995E9292C5186CC00FD83C5 /* XCRemoteSwiftPackageReference "UIUniversals" */,
 			);
 			productRefGroup = C9BF0AAE2C21C45200D7DEAC /* Products */;
 			projectDirPath = "";
@@ -459,6 +462,7 @@
 				C951876C2C3EE7FF00419E3A /* CactusRadialLines.swift in Sources */,
 				C9B4629C2C4349F9001A729A /* InteriorGlow.swift in Sources */,
 				C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */,
+				C995E9282C51866100FD83C5 /* RadialGlow.swift in Sources */,
 				C9A02C1D2C2291AF003A7737 /* UIConstants.swift in Sources */,
 				C9A02C212C2291B7003A7737 /* StyledScrollView.swift in Sources */,
 				C9F153C72C245EDA00237130 /* BlurCardPreview.swift in Sources */,
@@ -835,7 +839,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C9B462AB2C498090001A729A /* XCRemoteSwiftPackageReference "UIUniversals" */ = {
+		C995E9292C5186CC00FD83C5 /* XCRemoteSwiftPackageReference "UIUniversals" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Brian-Masse/UIUniversals";
 			requirement = {
@@ -846,9 +850,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C9B462AC2C498090001A729A /* UIUniversals */ = {
+		C995E92A2C5186CC00FD83C5 /* UIUniversals */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C9B462AB2C498090001A729A /* XCRemoteSwiftPackageReference "UIUniversals" */;
+			package = C995E9292C5186CC00FD83C5 /* XCRemoteSwiftPackageReference "UIUniversals" */;
 			productName = UIUniversals;
 		};
 /* End XCSwiftPackageProductDependency section */
