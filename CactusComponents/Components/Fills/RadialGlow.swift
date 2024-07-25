@@ -15,6 +15,7 @@ struct CactusRadialGlow: View {
     let colors: [Color]
     
     let opacity: Double
+    let offset: Double
     
     let ignoreSafeArea: Bool
     
@@ -48,7 +49,7 @@ struct CactusRadialGlow: View {
             .scaleEffect(1.3)
             .blur(radius: 40)
             .scaleEffect(y: 0.95)
-            .offset(y: (100 / 650) * geo.size.height )
+            .offset(y: (100 / 650) * geo.size.height + offset)
             
             .clipShape(Rectangle())
         }
@@ -63,12 +64,13 @@ struct CactusRadialGlowModifier: ViewModifier {
     
     let colors: [Color]
     let opacity: Double
+    let offset: Double
     let ignoreSafeArea: Bool
     
     func body(content: Content) -> some View {
         content
             .background {
-                CactusRadialGlow(colors: colors, opacity: opacity, ignoreSafeArea: ignoreSafeArea)
+                CactusRadialGlow(colors: colors, opacity: opacity, offset: offset, ignoreSafeArea: ignoreSafeArea)
             }
     }
 }
@@ -76,8 +78,8 @@ struct CactusRadialGlowModifier: ViewModifier {
 
 //MARK: Extension
 extension View {
-    func backgroundRadialGlowDemo(_ colors: [Color], opacity: Double = 1, ignoreSafeArea: Bool = true) -> some View {
-        modifier( CactusRadialGlowModifier( colors: colors, opacity: opacity, ignoreSafeArea: ignoreSafeArea ) )
+    func backgroundRadialGlowDemo(_ colors: [Color], opacity: Double = 1, offset: Double = 0, ignoreSafeArea: Bool = true) -> some View {
+        modifier( CactusRadialGlowModifier( colors: colors, opacity: opacity, offset: offset, ignoreSafeArea: ignoreSafeArea ) )
     }
 }
 
@@ -92,6 +94,9 @@ struct CactusRadialGlowDemoView: View {
     let colors = [ makeColor(242, 138, 2),
                    makeColor(250, 208, 55),
                    makeColor(16, 176, 224) ]
+    
+//    @ViewBuilder
+    
     
     var body: some View {
         
