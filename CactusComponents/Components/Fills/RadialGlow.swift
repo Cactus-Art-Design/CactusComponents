@@ -91,23 +91,72 @@ struct CactusRadialGlowDemoView: View {
         .init(red: red / 255, green: green / 255, blue: blue / 255)
     }
     
-    let colors = [ makeColor(242, 138, 2),
-                   makeColor(250, 208, 55),
-                   makeColor(16, 176, 224) ]
+    let pallette1 = [ makeColor(242, 138, 2), makeColor(250, 208, 55), makeColor(16, 176, 224) ]
+    let pallette2 = [makeColor(204, 103, 86), makeColor(190, 100, 117), makeColor( 91, 75, 146 )]
+    let pallette3 = [makeColor(221, 230, 135), makeColor(66, 224, 245), makeColor( 114, 66, 245 )]
     
-//    @ViewBuilder
+    let bodyText: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     
+//    MARK: ViewBuilders
+    @ViewBuilder
+    private func makeCard(icon: String, title: String, subTitle: String) -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Image(systemName: icon)
+                
+                Text(title)
+                
+                Spacer()
+            }
+            .font(.title)
+            .bold()
+            .textCase(.uppercase)
+            
+            Text(subTitle)
+                .opacity(0.5)
+            
+            Text(bodyText)
+                .font(.callout)
+                .lineLimit(2)
+        }
+        .padding()
+        .background {
+            RoundedRectangle(cornerRadius: 25)
+                .foregroundStyle(.ultraThinMaterial)
+                .opacity(0.6)
+        }
+    }
     
-    var body: some View {
+    @ViewBuilder
+    private func makeContent() -> some View {
         
-        VStack {
+        VStack(alignment: .leading) {
             HStack { Spacer() }
             
-            Text("hello world!")
+            Group {
+                Text("Hello World")
+                Text("Radial Glow Fill")
+                    .opacity(0.5)
+            }
+            .font(.largeTitle)
+            .bold()
+            .textCase(.uppercase)
             
             Spacer()
+            
+            makeCard(icon: "map", title: "Task 1", subTitle: "Lorem ipsum dolor")
+            
+            makeCard(icon: "tram", title: "Task 2", subTitle: "Lorem ipsum dolor")
         }
-        .backgroundRadialGlowDemo(colors)
+    }
+    
+    
+//    MARK: Body
+    var body: some View {
+        
+        makeContent()
+            .padding()
+            .backgroundRadialGlowDemo(pallette1)
     }
 }
 
