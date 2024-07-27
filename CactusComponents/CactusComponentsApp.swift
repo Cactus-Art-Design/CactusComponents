@@ -11,7 +11,7 @@ import SwiftUI
 struct CactusComponentsApp: App {
     var body: some Scene {
         WindowGroup {
-            TestingView()
+            CactusCastShadowDemoView()
         }
     }
 }

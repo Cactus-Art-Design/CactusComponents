@@ -8,40 +8,27 @@
 import Foundation
 import SwiftUI
 
-
-
-struct CactusCastShadow: View {
-    
-    var body: some View {
-        
-        Text("HI!")
-            .font(.custom("helvetica", size: 260))
-//            .bold()
-            .fontWeight(.black)
-            .modifier(CactusCastShadowDemoView())
-//            .padding([.bottom, .trailing], 50)
-//            .background(.red)
-    }
-}
-
-struct CactusCastShadowDemoView: ViewModifier {
+//MARK: CactusCastShadow
+struct CactusCastShadow: ViewModifier {
     
     @Environment(\.colorScheme) var colorScheme
     
+    
+//    MARK: Vars
     let count: Double
     let spacing: Double
     let opacity: Double
     let angle: Double
     
-    @State var foregroundColor: Color?
+    let foregroundColor: Color?
     let backgroundColor: Color
     
-    init( angle: Double = 45,
-          length: Double = 100,
-          spacing: Double = 5,
-          foregroundStyle: Color? = nil,
-          backgroundStyle: Color = .yellow,
-          opacity: Double = 0.7) {
+    init( angle: Double,
+          length: Double,
+          spacing: Double,
+          foregroundStyle: Color?,
+          backgroundStyle: Color,
+          opacity: Double) {
         
         
         self.angle = angle
@@ -55,6 +42,7 @@ struct CactusCastShadowDemoView: ViewModifier {
         
     }
     
+//    MARK: struct methods
     private func degToRad(_ angle: Double) -> Double {
         (Double.pi * angle) / 180
     }
@@ -86,6 +74,7 @@ struct CactusCastShadowDemoView: ViewModifier {
         return Color(red: red, green: green, blue: blue).opacity( scale == 1 ? 0 : 1 )
     }
     
+//    MARK: Body
     func body(content: Content) -> some View {
         
         VStack {
@@ -106,41 +95,138 @@ struct CactusCastShadowDemoView: ViewModifier {
                 .blur(radius: 0.5)
             }
         }
-        .onAppear { 
-            if foregroundColor == nil { self.foregroundColor = colorScheme == .dark ? .white : .black}
-        }
-        
-        
+//        .onAppear { 
+//            if foregroundColor == nil { self.foregroundColor = colorScheme == .dark ? .white : .black}
+//        }
     }
 }
 
-struct TestingView: View {
+//MARK: Extension
+extension View {
     
+    func castShadow( at angle: Double = 30,
+                     length: Double = 100,
+                     spacing: Double = 5,
+                     foregroundStyle: Color = .black,
+                     backgroundStyle: Color,
+                     opacity: Double = 1,
+                     changeOnColorScheme: Bool = false
+    ) -> some View {
+        
+        modifier( CactusCastShadow(angle: angle,
+                                   length: length,
+                                   spacing: spacing,
+                                   foregroundStyle: changeOnColorScheme ? nil : foregroundStyle,
+                                   backgroundStyle: backgroundStyle,
+                                   opacity: opacity) )
+        
+    }
+    
+}
+
+//MARK: CactusCastShadowDemoView
+struct CactusCastShadowDemoView: View {
+    
+//    MARK: Vars
+    @State private var angle: Double = 30
+    @State private var length: Double = 100
+    @State private var spacing: Double = 5
+    @State private var opacity: Double = 1
+    
+    @State private var foregroundColor: Color = .green
+    @State private var backgroundColor: Color = .black
+    @State private var fullBackgroundColor: Color = .black
+    
+//    MARK: Controls
+    @ViewBuilder
+    private func makeControl( title: String, value: Binding<Double>, in range: ClosedRange<Double> ) -> some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .font(.callout)
+                .bold()
+            
+            HStack {
+                Slider(value: value, in: range)
+                
+                Text("\(Int(value.wrappedValue))")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func makeColorPicker( title: String, value: Binding<Color> ) -> some View {
+        
+        VStack {
+            
+            ColorPicker(title, selection: value)
+                .padding()
+                .background {
+                    
+                    RoundedRectangle(cornerRadius: 15)
+                        .foregroundStyle(.white.opacity(0.15))
+                }
+        }
+        
+    }
+    
+    @ViewBuilder
+    private func makeControls(  ) -> some View {
+        
+        VStack(spacing: 0) {
+            makeControl(title: "Angle", value: $angle, in: 0...360)
+            
+            makeControl(title: "Length", value: $length, in: 5...300)
+            
+            makeControl(title: "Spacing", value: $spacing, in: 2...30)
+            
+            makeControl(title: "Opacity", value: $opacity, in: 0...1)
+            
+            HStack {
+                
+                makeColorPicker(title: "FG", value: $foregroundColor)
+                
+                makeColorPicker(title: "BG", value: $backgroundColor)
+                
+                makeColorPicker(title: "BG", value: $fullBackgroundColor)
+            }
+        }
+        .padding()
+        .background(.black.opacity(0.5))
+        
+    }
+    
+    
+//    MARK: DemoBody
     var body: some View {
         
         GeometryReader { geo in
         
             VStack {
+                makeControls()
+                    .zIndex(5)
                 
                 Spacer()
                 
-                CactusCastShadow()
-                    
+                Text("HI")
+                    .font(.custom("helvetica", size: 290))
+                    .fontWeight(.black)
+                
+                    .castShadow(at: angle,
+                                length: length,
+                                spacing: spacing,
+                                foregroundStyle: foregroundColor,
+                                backgroundStyle: backgroundColor,
+                                opacity: opacity)
                 
                 Spacer()
-                
             }
-            
         }
-        .background(.yellow)
+        .background(fullBackgroundColor)
         
     }
-    
 }
 
 
 #Preview {
-    
-    TestingView()
-    
+    CactusCastShadowDemoView()
 }
