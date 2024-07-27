@@ -129,8 +129,8 @@ struct CactusCastShadowDemoView: View {
     
 //    MARK: Vars
     @State private var angle: Double = 30
-    @State private var length: Double = 100
-    @State private var spacing: Double = 5
+    @State private var length: Double = 50
+    @State private var spacing: Double = 10
     @State private var opacity: Double = 1
     
     @State private var foregroundColor: Color = .green
@@ -210,6 +210,11 @@ struct CactusCastShadowDemoView: View {
                 Text("HI")
                     .font(.custom("helvetica", size: 290))
                     .fontWeight(.black)
+//                    .rotation3DEffect(
+//                        .init(degrees: -30),
+//                        axis: (x: -1, y: 1.0, z: 0.0),
+//                        perspective: 0.1
+//                    )
                 
                     .castShadow(at: angle,
                                 length: length,
@@ -217,6 +222,19 @@ struct CactusCastShadowDemoView: View {
                                 foregroundStyle: foregroundColor,
                                 backgroundStyle: backgroundColor,
                                 opacity: opacity)
+//                
+                    .onTapGesture {
+                        foregroundColor = .green
+                        length = 240
+                        spacing = 30
+                        
+                        withAnimation(.easeOut(duration: 1.5)) {
+                            foregroundColor = .yellow
+                            length = 50
+                            spacing = 10
+                        }
+                        
+                    }
                 
                 Spacer()
             }
