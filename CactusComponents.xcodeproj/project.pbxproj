@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C90444F02C557C2E00AF8B22 /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C90444EF2C557C2E00AF8B22 /* UIUniversals */; };
+		C90444F22C557D6800AF8B22 /* CactusCastShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90444F12C557D6800AF8B22 /* CactusCastShadow.swift */; };
 		C951876C2C3EE7FF00419E3A /* CactusRadialLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876B2C3EE7FF00419E3A /* CactusRadialLines.swift */; };
 		C95187702C3F349F00419E3A /* StripedFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876E2C3F0E2C00419E3A /* StripedFill.swift */; };
 		C97C9C812C405683000D333F /* CactusRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97C9C802C405683000D333F /* CactusRibbon.swift */; };
@@ -15,7 +17,6 @@
 		C995E9232C5181FF00FD83C5 /* CactusRibbonDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E9222C5181FE00FD83C5 /* CactusRibbonDemoView.swift */; };
 		C995E9262C51829E00FD83C5 /* CactusRadialLinesDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E9252C51829E00FD83C5 /* CactusRadialLinesDemoView.swift */; };
 		C995E9282C51866100FD83C5 /* RadialGlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E9272C51866100FD83C5 /* RadialGlow.swift */; };
-		C995E92B2C5186CC00FD83C5 /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C995E92A2C5186CC00FD83C5 /* UIUniversals */; };
 		C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02BCC2C22404F003A7737 /* LoadingBlur.swift */; };
 		C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C082C227DD4003A7737 /* LoadingWave.swift */; };
 		C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A02C182C2291AE003A7737 /* ScrollingCardPreview.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C90444F12C557D6800AF8B22 /* CactusCastShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusCastShadow.swift; sourceTree = "<group>"; };
 		C951876B2C3EE7FF00419E3A /* CactusRadialLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusRadialLines.swift; sourceTree = "<group>"; };
 		C951876E2C3F0E2C00419E3A /* StripedFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripedFill.swift; sourceTree = "<group>"; };
 		C97C9C802C405683000D333F /* CactusRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusRibbon.swift; sourceTree = "<group>"; };
@@ -105,7 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C995E92B2C5186CC00FD83C5 /* UIUniversals in Frameworks */,
+				C90444F02C557C2E00AF8B22 /* UIUniversals in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +143,7 @@
 				C951876E2C3F0E2C00419E3A /* StripedFill.swift */,
 				C9B4629B2C4349F9001A729A /* InteriorGlow.swift */,
 				C995E9272C51866100FD83C5 /* RadialGlow.swift */,
+				C90444F12C557D6800AF8B22 /* CactusCastShadow.swift */,
 			);
 			path = Fills;
 			sourceTree = "<group>";
@@ -322,7 +325,7 @@
 			);
 			name = CactusComponents;
 			packageProductDependencies = (
-				C995E92A2C5186CC00FD83C5 /* UIUniversals */,
+				C90444EF2C557C2E00AF8B22 /* UIUniversals */,
 			);
 			productName = CactusComponents;
 			productReference = C9BF0AAD2C21C45200D7DEAC /* CactusComponents.app */;
@@ -397,7 +400,7 @@
 			);
 			mainGroup = C9BF0AA42C21C45200D7DEAC;
 			packageReferences = (
-				C995E9292C5186CC00FD83C5 /* XCRemoteSwiftPackageReference "UIUniversals" */,
+				C90444EE2C557C2E00AF8B22 /* XCRemoteSwiftPackageReference "UIUniversals" */,
 			);
 			productRefGroup = C9BF0AAE2C21C45200D7DEAC /* Products */;
 			projectDirPath = "";
@@ -461,6 +464,7 @@
 				C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */,
 				C951876C2C3EE7FF00419E3A /* CactusRadialLines.swift in Sources */,
 				C9B4629C2C4349F9001A729A /* InteriorGlow.swift in Sources */,
+				C90444F22C557D6800AF8B22 /* CactusCastShadow.swift in Sources */,
 				C9BF0AB12C21C45200D7DEAC /* CactusComponentsApp.swift in Sources */,
 				C995E9282C51866100FD83C5 /* RadialGlow.swift in Sources */,
 				C9A02C1D2C2291AF003A7737 /* UIConstants.swift in Sources */,
@@ -839,7 +843,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C995E9292C5186CC00FD83C5 /* XCRemoteSwiftPackageReference "UIUniversals" */ = {
+		C90444EE2C557C2E00AF8B22 /* XCRemoteSwiftPackageReference "UIUniversals" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Brian-Masse/UIUniversals";
 			requirement = {
@@ -850,9 +854,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C995E92A2C5186CC00FD83C5 /* UIUniversals */ = {
+		C90444EF2C557C2E00AF8B22 /* UIUniversals */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C995E9292C5186CC00FD83C5 /* XCRemoteSwiftPackageReference "UIUniversals" */;
+			package = C90444EE2C557C2E00AF8B22 /* XCRemoteSwiftPackageReference "UIUniversals" */;
 			productName = UIUniversals;
 		};
 /* End XCSwiftPackageProductDependency section */

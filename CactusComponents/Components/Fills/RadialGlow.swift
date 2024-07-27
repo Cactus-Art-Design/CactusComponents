@@ -108,7 +108,7 @@ struct CactusRadialGlowDemoView: View {
                 
                 Spacer()
             }
-            .font(.title)
+            .font(.title3)
             .bold()
             .textCase(.uppercase)
             
@@ -156,7 +156,7 @@ struct CactusRadialGlowDemoView: View {
         
         makeContent()
             .padding()
-            .backgroundRadialGlowDemo(pallette1)
+            .backgroundRadialGlowDemo(pallette3)
     }
 }
 
