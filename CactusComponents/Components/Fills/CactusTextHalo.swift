@@ -7,88 +7,212 @@
 
 import Foundation
 import SwiftUI
+import UIUniversals
 
-struct CactusTextHalo: View {
+//MARK: Preference Keys
+
+private struct WidthPreferenceKey: PreferenceKey {
+    static var defaultValue: Double = 0
+    static func reduce(value: inout Double, nextValue: () -> Double) {
+        value = nextValue()
+    }
+}
+
+private struct Sizeable: View {
+    var body: some View {
+        GeometryReader { geometry in
+            Color.clear
+                .preference(key: WidthPreferenceKey.self, value: geometry.size.width)
+        }
+    }
+}
+
+
+//MARK: CactusTextHalo
+struct CactusTextHalo<C: View>: View, Animatable {
  
     
-    @State private var angle: Double = 0
+//    MARK: Vars
+    var angle: Double
+    var animatableData: Double {
+        get { angle }
+        set { angle = newValue }
+    }
+
+    let text: String
+    let radius: Double
     
-    static let text: String = "Hello world this is a really long and awesome string!"
+    let verticalPerspective: Double
+    let backgroundOpacity: Double
+    let maskedAngles: ClosedRange<Double>
     
-    @State private var radius: Double = 150
+    let contentBuilder: (String) -> C
+    
+    @State var textWidths: [Int:Double] = [:]
     
     var texts: [(offset: Int, element: Character)] {
-        return Array(CactusTextHalo.text.enumerated())
+        return Array(text.enumerated())
     }
     
+    init( _ text: String,
+          at angle: Double,
+          in radius: Double,
+          verticalPerspective: Double = 0.5,
+          backgroundOpacity: Double = 0.1,
+          maskedAngles: ClosedRange<Double> = 90...270,
+          @ViewBuilder contentBuilder: @escaping (String) -> C) {
+        
+        self.text = text
+        self.angle = angle
+        self.radius = radius
+        self.verticalPerspective = verticalPerspective
+        self.backgroundOpacity = backgroundOpacity
+        self.maskedAngles = maskedAngles
+        self.contentBuilder = contentBuilder
+        
+    }
+    
+    
+//    MARK: Struct Metods
     private func makeTextWidth() -> Double {
         let circumference = 2 * Double.pi * radius
         return circumference / Double( texts.count )
     }
     
     private func makeAngle(from index: Int) -> Double {
-        let proposedAngle = (360 * Double(index) / Double( texts.count)) + self.angle
+        let circumference = 2 * Double.pi * radius
+        let previousOffsets = textWidths.filter{$0.key < index}.map{$0.value}.reduce(0, +)
+        let percentage = (previousOffsets + (textWidths[index] ?? 0) / 2) / circumference
+
+        let proposedAngle = (360 * percentage) + self.angle
         return proposedAngle.truncatingRemainder(dividingBy: 360)
     }
     
+    private var verticalPerspectiveDir: Double {
+        verticalPerspective / abs(verticalPerspective)
+    }
+    
+//    MARK: Body
     var body: some View {
-        
-        VStack {
-            
-            
-            Slider(value: $angle, in: 0...360)
-            
-            Slider(value: $radius, in: 100...350)
-            
-            //        Rectangle()
-            //            .frame(width: 300, height: 100)
-            //
-            
-            //
-            
-            Spacer()
-            
-            ZStack {
+
+        ZStack {
+            ForEach( texts, id: \.offset ) { index, char in
                 
-                let width = makeTextWidth()
+                let angle = makeAngle(from: index)
+                let shouldHide = angle > maskedAngles.lowerBound && angle < maskedAngles.upperBound
                 
-                ForEach( texts, id: \.offset ) { index, char in
-                    
-                    let angle = makeAngle(from: index)
-                    let shouldHide = angle > 90 && angle < 270
-                    
-                    ZStack {
-                        Text("\(char)")
-                    }
-                    .bold()
-                    .font(.title)
-                    .frame(width: width)
-                    .background(.white)
-                    .zIndex( abs( Double(texts.count) - angle ) )
-                    .opacity(shouldHide ? 0.5 : 1)
-                    
-                    
-                    .rotation3DEffect(
-                        .init(degrees: -angle),
-                        axis: (x: 0.0, y: 1.0, z: 0.0),
-                        anchor: .bottom,
-                        perspective: -0.5
-                    )
-                    
-                    .offset(x:  sin( (Double.pi * angle) / 180 ) * radius  )
-                    .offset(y:  cos( (Double.pi * angle) / 180 ) * radius * -0.5 )
-                    
+                ZStack {
+                    contentBuilder( "\(char)" )
+                        .background(Sizeable())
+                        .onPreferenceChange(WidthPreferenceKey.self, perform: { width in
+                            textWidths[index] = width
+                        })
                 }
-            }
-            .rotationEffect(.init(degrees: 20))
+                .zIndex( abs( Double(texts.count) - angle ) )
+                .opacity(shouldHide ? backgroundOpacity : 1)
             
-            Spacer()
+                .frame(width: textWidths[index] ?? 200)
+                .rotation3DEffect(
+                    .init(degrees: -angle),
+                    axis: (x: 0.0, y: 1.0, z: 0.0),
+                    anchor: .init(x: 0.5, y: 0.5 + verticalPerspective ),
+                    perspective: 0.5
+                )
+//                
+                .offset(x:  sin( (Double.pi * angle) / 180 ) * radius  )
+                .offset(y:  cos( (Double.pi * angle) / 180 ) * radius * verticalPerspective )
+                
+            }
         }
+//        .rotationEffect(.init(degrees: 20))
     }
 }
 
+//MARK: CactusTextHaloDemoView
+struct CactusTextHaloDemoView: View {
+    
+    let text: String = "#31#31#31#31#31#31#31#31#31#31#31"
+    let text2: String = "Mólancoliquo            Appel non toxé           numéro"
+    let text3: String = "#31#777723              Anonyme                  OC + prix de l'appel"
+    
+    @State private var rotation: Double = 0
+    @State private var radius: Double = 150
+    @State private var offset: Double = -75
+    
+    @State private var verticalPerspective: Double = -0.5
+    
+    @State private var color: Color = .blue
+    
+    var body: some View {
+    
+        VStack {
+                
+            Slider(value: $rotation, in: 0...360)
+            Slider(value: $radius, in: 100...350)
+            Slider(value: $verticalPerspective, in: -1...1)
+            
+            GeometryReader { geo in
+                VStack {
+                    HStack { Spacer() }
+                    Spacer()
+                    CactusTextHalo(text, at: rotation, in: radius, verticalPerspective: verticalPerspective) { text in
+                        Text(text)
+                            .bold()
+                            .font(.custom("Helvetica", size: 50))
+                            .foregroundStyle(color)
+                            .shadow(color: color, radius: 5)
+                            .shadow(color: color, radius: 30)
+                    }
+                    
+                    CactusTextHalo(text, at: rotation, in: radius, verticalPerspective: verticalPerspective) { text in
+                        Text(text)
+                            .bold()
+                            .font(.custom("Helvetica", size: 50))
+                            .foregroundStyle(color)
+                            .shadow(color: color, radius: 5)
+                            .shadow(color: color, radius: 30)
+                    }
+                    
+                    CactusTextHalo(text2, at: rotation - 60, in: radius, verticalPerspective: verticalPerspective) { text in
+                        Text(text)
+                            .bold()
+                            .font(.caption)
+                            .foregroundStyle(color)
+                            .opacity(0.9)
+                    }
+        
+                    CactusTextHalo(text3, at: rotation - 60, in: radius, verticalPerspective: verticalPerspective) { text in
+                        Text(text)
+                            .bold()
+                            .font(.caption)
+                            .foregroundStyle(color)
+                            .opacity(0.9)
+                    }
+                    
+                    Spacer()
+                    
+                }
+                .offset(y: offset)
+                .stripedMask(at: 90, width: 2, spacing: 3)
+//                .stripedMask(at: 10, width: 10, spacing: 3, style: .blue)
+            }
+        }
+//        .onAppear {
+//            withAnimation(.linear(duration: 7).repeatForever(autoreverses: false) ) {
+//                rotation += 360
+//            }
+//            
+//            withAnimation(.easeInOut(duration: 3.5).repeatForever(autoreverses: true) ) {
+//                verticalPerspective = 0.5
+//                offset = 75
+//            }
+//        }
+    }
+}
+
+
 #Preview {
     
-    CactusTextHalo()
+    CactusTextHaloDemoView()
     
 }

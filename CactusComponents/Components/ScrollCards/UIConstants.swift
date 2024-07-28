@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-struct Constants {
-    static let mainFont: String = "Neutral Face"
-}
-
+//struct Constants {
+//    static let mainFont: String = "Neutral Face"
+//}
+//
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 struct StyledText: View {
     let text: String
@@ -26,16 +26,16 @@ struct StyledText: View {
     
     var body: some View {
         Text(text)
-            .font(Font.custom(Constants.mainFont, size: size))
+            .font(Font.custom("Neutral Face", size: size))
 //            .bold(bold)
     }
 }
-
-@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-struct Divider: View {
-    var body: some View {
-        Rectangle()
-            .frame(height: 1)
-            .opacity(0.6)
-    }
-}
+//
+//@available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+//struct Divider: View {
+//    var body: some View {
+//        Rectangle()
+//            .frame(height: 1)
+//            .opacity(0.6)
+//    }
+//}
