@@ -128,12 +128,12 @@ extension View {
 struct CactusCastShadowDemoView: View {
     
 //    MARK: Vars
-    @State private var angle: Double = 30
-    @State private var length: Double = 50
-    @State private var spacing: Double = 10
-    @State private var opacity: Double = 1
+    @State private var angle: Double = 200
+    @State private var length: Double = 200
+    @State private var spacing: Double = 15
+    @State private var opacity: Double = 0.9
     
-    @State private var foregroundColor: Color = .green
+    @State private var foregroundColor: Color = .yellow
     @State private var backgroundColor: Color = .black
     @State private var fullBackgroundColor: Color = .black
     
@@ -191,7 +191,6 @@ struct CactusCastShadowDemoView: View {
             }
         }
         .padding()
-        .background(.black.opacity(0.5))
         
     }
     
@@ -205,36 +204,43 @@ struct CactusCastShadowDemoView: View {
                 makeControls()
                     .zIndex(5)
                 
-                Spacer()
-                
-                Text("HI")
-                    .font(.custom("helvetica", size: 290))
-                    .fontWeight(.black)
-//                    .rotation3DEffect(
-//                        .init(degrees: -30),
-//                        axis: (x: -1, y: 1.0, z: 0.0),
-//                        perspective: 0.1
-//                    )
-                
-                    .castShadow(at: angle,
-                                length: length,
-                                spacing: spacing,
-                                foregroundStyle: foregroundColor,
-                                backgroundStyle: backgroundColor,
-                                opacity: opacity)
+//                VStack(spacing: -100) {
+//                    Text("20")
+//                    Text("24")
+//                }
+//                .font(.custom("Helvetica", size: 250))
+//                .bold()
+//                .stripedMask(at: 90, width: 3, spacing: 5)
 //                
-                    .onTapGesture {
-                        foregroundColor = .green
-                        length = 240
-                        spacing = 30
-                        
-                        withAnimation(.easeOut(duration: 1.5)) {
-                            foregroundColor = .yellow
-                            length = 50
-                            spacing = 10
-                        }
-                        
-                    }
+//                .castShadow(at: angle,
+//                            length: length,
+//                            spacing: spacing,
+//                            foregroundStyle: foregroundColor,
+//                            backgroundStyle: backgroundColor,
+//                            opacity: opacity)
+//                
+//                .rotation3DEffect(
+//                    .init(degrees: 45),
+//                    axis: (x: -0.7, y: 2, z: 0.0),
+//                    perspective: 0
+//                )
+                
+                HStack {
+                    Spacer()
+                    
+                    Circle()
+                        .foregroundStyle(.blue)
+                        .frame(width: 150, height: 150)
+                        .castShadow(at: 90,
+                                    length: length,
+                                    spacing: spacing,
+                                    foregroundStyle: .blue,
+                                    backgroundStyle: .white,
+                                    opacity: opacity)
+                    
+                }
+                .padding(.horizontal)
+                
                 
                 Spacer()
             }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C90444F02C557C2E00AF8B22 /* UIUniversals in Frameworks */ = {isa = PBXBuildFile; productRef = C90444EF2C557C2E00AF8B22 /* UIUniversals */; };
 		C90444F22C557D6800AF8B22 /* CactusCastShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90444F12C557D6800AF8B22 /* CactusCastShadow.swift */; };
+		C90444F42C55D23600AF8B22 /* CactusTextHalo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90444F32C55D23600AF8B22 /* CactusTextHalo.swift */; };
 		C951876C2C3EE7FF00419E3A /* CactusRadialLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876B2C3EE7FF00419E3A /* CactusRadialLines.swift */; };
 		C95187702C3F349F00419E3A /* StripedFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876E2C3F0E2C00419E3A /* StripedFill.swift */; };
 		C97C9C812C405683000D333F /* CactusRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97C9C802C405683000D333F /* CactusRibbon.swift */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		C90444F12C557D6800AF8B22 /* CactusCastShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusCastShadow.swift; sourceTree = "<group>"; };
+		C90444F32C55D23600AF8B22 /* CactusTextHalo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusTextHalo.swift; sourceTree = "<group>"; };
 		C951876B2C3EE7FF00419E3A /* CactusRadialLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusRadialLines.swift; sourceTree = "<group>"; };
 		C951876E2C3F0E2C00419E3A /* StripedFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripedFill.swift; sourceTree = "<group>"; };
 		C97C9C802C405683000D333F /* CactusRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusRibbon.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				C9B4629B2C4349F9001A729A /* InteriorGlow.swift */,
 				C995E9272C51866100FD83C5 /* RadialGlow.swift */,
 				C90444F12C557D6800AF8B22 /* CactusCastShadow.swift */,
+				C90444F32C55D23600AF8B22 /* CactusTextHalo.swift */,
 			);
 			path = Fills;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				C97C9C812C405683000D333F /* CactusRibbon.swift in Sources */,
 				C9A02C2A2C232B6C003A7737 /* ComponentView.swift in Sources */,
 				C9A02C1E2C2291AF003A7737 /* CardTemplateView.swift in Sources */,
+				C90444F42C55D23600AF8B22 /* CactusTextHalo.swift in Sources */,
 				C9A02C1F2C2291AF003A7737 /* ScrollingCardView.swift in Sources */,
 				C95187702C3F349F00419E3A /* StripedFill.swift in Sources */,
 				C9A02C1C2C2291AF003A7737 /* ScrollingCardPreview.swift in Sources */,
