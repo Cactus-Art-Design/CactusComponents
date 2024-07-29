@@ -64,8 +64,8 @@ struct CactusCastShadow: ViewModifier {
         let startColor = (foregroundColor ?? .white).components
         let endColor = backgroundColor.components
         
-        
-        let scale = max(min(Double(index) / count + (1 - opacity), 1), 0)
+        let proposedScale = (Double(index) / count) + (1 - opacity)
+        let scale = max(min(proposedScale, 1), 0)
         
         let red     = (endColor.red - startColor.red) * (scale) + startColor.red
         let green   = (endColor.green - startColor.green) * (scale) + startColor.green
@@ -87,7 +87,7 @@ struct CactusCastShadow: ViewModifier {
                     ForEach(0...Int(count), id: \.self) { i in
                         content
                             .offset(x: makeHorizontalOffset(from: i), y: makeVerticalOffset(from: i))
-                            .opacity( 1 - makeOpacity(from: i) )
+//                            .opacity( 1 - makeOpacity(from: i) )
                             .zIndex(count - Double(i))
                             .foregroundStyle( makeColor(from: i) )
                     }
@@ -95,9 +95,6 @@ struct CactusCastShadow: ViewModifier {
                 .blur(radius: 0.5)
             }
         }
-//        .onAppear { 
-//            if foregroundColor == nil { self.foregroundColor = colorScheme == .dark ? .white : .black}
-//        }
     }
 }
 
@@ -139,25 +136,8 @@ struct CactusCastShadowDemoView: View {
     
 //    MARK: Controls
     @ViewBuilder
-    private func makeControl( title: String, value: Binding<Double>, in range: ClosedRange<Double> ) -> some View {
-        VStack(alignment: .leading) {
-            Text(title)
-                .font(.callout)
-                .bold()
-            
-            HStack {
-                Slider(value: value, in: range)
-                
-                Text("\(Int(value.wrappedValue))")
-            }
-        }
-    }
-    
-    @ViewBuilder
     private func makeColorPicker( title: String, value: Binding<Color> ) -> some View {
-        
         VStack {
-            
             ColorPicker(title, selection: value)
                 .padding()
                 .background {
@@ -166,20 +146,19 @@ struct CactusCastShadowDemoView: View {
                         .foregroundStyle(.white.opacity(0.15))
                 }
         }
-        
     }
     
     @ViewBuilder
     private func makeControls(  ) -> some View {
         
         VStack(spacing: 0) {
-            makeControl(title: "Angle", value: $angle, in: 0...360)
+            CactusComponentControl("Angle", for: $angle, in: 0...360)
             
-            makeControl(title: "Length", value: $length, in: 5...300)
+            CactusComponentControl("Length", for: $length, in: 5...300)
             
-            makeControl(title: "Spacing", value: $spacing, in: 2...30)
+            CactusComponentControl("Spacing", for: $spacing, in: 2...30)
             
-            makeControl(title: "Opacity", value: $opacity, in: 0...1)
+            CactusComponentControl("Opacity", for: $opacity, in: 0...1, step: 0.05)
             
             HStack {
                 
@@ -191,7 +170,6 @@ struct CactusCastShadowDemoView: View {
             }
         }
         .padding()
-        
     }
     
     
@@ -200,47 +178,29 @@ struct CactusCastShadowDemoView: View {
         
         GeometryReader { geo in
         
-            VStack {
+            VStack(spacing: 5) {
                 makeControls()
                     .zIndex(5)
                 
-//                VStack(spacing: -100) {
-//                    Text("20")
-//                    Text("24")
-//                }
-//                .font(.custom("Helvetica", size: 250))
-//                .bold()
-//                .stripedMask(at: 90, width: 3, spacing: 5)
-//                
-//                .castShadow(at: angle,
-//                            length: length,
-//                            spacing: spacing,
-//                            foregroundStyle: foregroundColor,
-//                            backgroundStyle: backgroundColor,
-//                            opacity: opacity)
-//                
-//                .rotation3DEffect(
-//                    .init(degrees: 45),
-//                    axis: (x: -0.7, y: 2, z: 0.0),
-//                    perspective: 0
-//                )
-                
-                HStack {
-                    Spacer()
-                    
-                    Circle()
-                        .foregroundStyle(.blue)
-                        .frame(width: 150, height: 150)
-                        .castShadow(at: 90,
-                                    length: length,
-                                    spacing: spacing,
-                                    foregroundStyle: .blue,
-                                    backgroundStyle: .white,
-                                    opacity: opacity)
-                    
+                VStack(spacing: -100) {
+                    Text("20")
+                    Text("24")
                 }
-                .padding(.horizontal)
+                .font(.custom("Helvetica", size: 250))
+                .bold()
                 
+                .castShadow(at: angle,
+                            length: length,
+                            spacing: spacing,
+                            foregroundStyle: foregroundColor,
+                            backgroundStyle: backgroundColor,
+                            opacity: opacity)
+                
+                .rotation3DEffect(
+                    .init(degrees: 45),
+                    axis: (x: -0.7, y: 2, z: 0.0),
+                    perspective: 0
+                )
                 
                 Spacer()
             }

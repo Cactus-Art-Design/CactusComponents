@@ -43,6 +43,7 @@
 		C9BF0AE32C21C5C600D7DEAC /* CactusComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AE22C21C5C600D7DEAC /* CactusComponent.swift */; };
 		C9F153C62C245EDA00237130 /* BlurCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F153C42C245EDA00237130 /* BlurCardView.swift */; };
 		C9F153C72C245EDA00237130 /* BlurCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F153C52C245EDA00237130 /* BlurCardPreview.swift */; };
+		C9FC40882C57E190004D0133 /* CactusComponentControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC40872C57E190004D0133 /* CactusComponentControls.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		C9BF0AE22C21C5C600D7DEAC /* CactusComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusComponent.swift; sourceTree = "<group>"; };
 		C9F153C42C245EDA00237130 /* BlurCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurCardView.swift; sourceTree = "<group>"; };
 		C9F153C52C245EDA00237130 /* BlurCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurCardPreview.swift; sourceTree = "<group>"; };
+		C9FC40872C57E190004D0133 /* CactusComponentControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusComponentControls.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +251,7 @@
 			children = (
 				C9BF0AB02C21C45200D7DEAC /* CactusComponentsApp.swift */,
 				C9BF0AB22C21C45200D7DEAC /* ContentView.swift */,
+				C9FC40872C57E190004D0133 /* CactusComponentControls.swift */,
 				C9A02C292C232B6C003A7737 /* ComponentView.swift */,
 				C9BF0AE22C21C5C600D7DEAC /* CactusComponent.swift */,
 				C9BF0AB42C21C45800D7DEAC /* Assets.xcassets */,
@@ -454,6 +457,7 @@
 				C9B462AA2C48B85B001A729A /* Layout1.swift in Sources */,
 				C9A02C272C2294F9003A7737 /* SlidingModalPreview.swift in Sources */,
 				C995E9212C51817A00FD83C5 /* CactusCarouselDemoView.swift in Sources */,
+				C9FC40882C57E190004D0133 /* CactusComponentControls.swift in Sources */,
 				C995E9262C51829E00FD83C5 /* CactusRadialLinesDemoView.swift in Sources */,
 				C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */,
 				C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */,

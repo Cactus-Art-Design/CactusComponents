@@ -94,19 +94,29 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             GeometryReader { geo in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack {
-                        ForEach( 0..<components.count, id: \.self ) { i in
-                            let component = components[i]
-                            
-                            ComponentPreviewView(component)
-                                .frame(width: geo.size.width - 80)
-                        }
-                    }
-                    .scrollTargetLayout()
+                
+                CactusCarousel(carouselLength: components.count) { i in
+                    
+                    let component = components[i]
+                    
+                    ComponentPreviewView(component)
+                        .frame(width: geo.size.width - 80)
+                    
                 }
-                .scrollTargetBehavior(.viewAligned)
-                .safeAreaPadding(.horizontal, 40)
+                
+//                ScrollView(.horizontal, showsIndicators: false) {
+//                    LazyHStack {
+//                        ForEach( 0..<components.count, id: \.self ) { i in
+//                            let component = components[i]
+//                            
+//                            ComponentPreviewView(component)
+//                                .frame(width: geo.size.width - 80)
+//                        }
+//                    }
+//                    .scrollTargetLayout()
+//                }
+//                .scrollTargetBehavior(.viewAligned)
+//                .safeAreaPadding(.horizontal, 40)
             }
         }
         .padding(.vertical)

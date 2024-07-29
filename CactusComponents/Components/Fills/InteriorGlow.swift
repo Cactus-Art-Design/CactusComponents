@@ -166,40 +166,22 @@ struct InteriorGlowTestView: View {
     
     @State private var selectedContent: Int = 0
     
-    @ViewBuilder
-    private func makeControl( title: String, value: Binding<Double>, in range: ClosedRange<Double> ) -> some View {
-        
-        VStack(alignment: .leading, spacing: 5) {
-            Text( title )
-                .font(.callout)
-                .bold()
-            
-            HStack {
-                Slider(value: value, in: range, step: 1)
-                
-                Text("\(Int( value.wrappedValue ))")
-            }
-        }
-        .padding(.bottom, 7)
-        
-    }
-    
 //    MARK: ContentBuilders
     @ViewBuilder
     private func makeControls() -> some View {
         
-        makeControl(title: "Radius", value: $radius, in: 0...50)
+        CactusComponentControl("Radius", for: $radius, in: 0...50)
         
         HStack {
-            makeControl(title: "Blur", value: $primaryBlur, in: 0...100)
+            CactusComponentControl("Blur", for: $primaryBlur, in: 0...100)
             
-            makeControl(title: " ", value: $secondaryBlur, in: 0...100)
+            CactusComponentControl(" ", for: $secondaryBlur, in: 0...100)
         }
         
         HStack {
-            makeControl(title: "Strength", value: $lineWidth, in: 1...50)
+            CactusComponentControl("Strength", for: $lineWidth, in: 1...50)
             
-            makeControl(title: " ", value: $secondarLineWidth, in: 1...50)
+            CactusComponentControl(" ", for: $secondarLineWidth, in: 1...50)
         }
         
     }
@@ -239,7 +221,9 @@ struct InteriorGlowTestView: View {
             ZStack(alignment: .bottom) {
                 VStack(alignment: .leading) {
                     
-                    Spacer(minLength: geo.size.height * 0.356)
+                    makeControls()
+                    
+//                    Spacer(minLength: geo.size.height * 0.356)
                     
                     Text("My Overview")
                         .textCase(.uppercase)
@@ -252,19 +236,6 @@ struct InteriorGlowTestView: View {
                     }
                     
                     makeContent(2, title: "Account History", subTitle: "", body: bodyText)
-                }
-                .overlay {
-                    LinearGradient(colors: [.black, .clear],
-                                   startPoint: .bottom,
-                                   endPoint: .init(x: 0.5, y: 0.75))
-                        .opacity(0.5)
-                        .allowsTightening(false)
-                    
-                    LinearGradient(colors: [.black, .clear],
-                                   startPoint: .bottom,
-                                   endPoint: .init(x: 0.5, y: 0.85))
-                        .opacity(0.5)
-                        .allowsTightening(false)
                 }
                 
                 HStack {

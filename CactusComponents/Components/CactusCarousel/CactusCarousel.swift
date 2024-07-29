@@ -140,6 +140,6 @@ struct CactusCarousel<C: View>: View {
                 }
             }
         }
-        .gesture(swipeGesture)
+        .highPriorityGesture(swipeGesture)
     }
 }
