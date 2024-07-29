@@ -42,7 +42,7 @@ struct CactusComponentsApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CactusCastShadowDemoView()
+            CactusTextHaloDemoView()
         }
     }
 }
