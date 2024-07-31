@@ -44,6 +44,7 @@
 		C9F153C62C245EDA00237130 /* BlurCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F153C42C245EDA00237130 /* BlurCardView.swift */; };
 		C9F153C72C245EDA00237130 /* BlurCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F153C52C245EDA00237130 /* BlurCardPreview.swift */; };
 		C9FC40882C57E190004D0133 /* CactusComponentControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC40872C57E190004D0133 /* CactusComponentControls.swift */; };
+		C9FC408A2C5AA26E004D0133 /* CactusContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC40892C5AA26E004D0133 /* CactusContextMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		C9F153C42C245EDA00237130 /* BlurCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurCardView.swift; sourceTree = "<group>"; };
 		C9F153C52C245EDA00237130 /* BlurCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurCardPreview.swift; sourceTree = "<group>"; };
 		C9FC40872C57E190004D0133 /* CactusComponentControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusComponentControls.swift; sourceTree = "<group>"; };
+		C9FC40892C5AA26E004D0133 /* CactusContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusContextMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				C995E9272C51866100FD83C5 /* RadialGlow.swift */,
 				C90444F12C557D6800AF8B22 /* CactusCastShadow.swift */,
 				C90444F32C55D23600AF8B22 /* CactusTextHalo.swift */,
+				C9FC40892C5AA26E004D0133 /* CactusContextMenu.swift */,
 			);
 			path = Fills;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				C995E9232C5181FF00FD83C5 /* CactusRibbonDemoView.swift in Sources */,
 				C97C9C812C405683000D333F /* CactusRibbon.swift in Sources */,
 				C9A02C2A2C232B6C003A7737 /* ComponentView.swift in Sources */,
+				C9FC408A2C5AA26E004D0133 /* CactusContextMenu.swift in Sources */,
 				C9A02C1E2C2291AF003A7737 /* CardTemplateView.swift in Sources */,
 				C90444F42C55D23600AF8B22 /* CactusTextHalo.swift in Sources */,
 				C9A02C1F2C2291AF003A7737 /* ScrollingCardView.swift in Sources */,
