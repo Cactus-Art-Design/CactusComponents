@@ -14,19 +14,19 @@ struct CactusContextMenu<C: View>: View {
     
     let count = 5
     let radius: Double = 100
+    let threshold: Double = 0
     
-    @State private var selectedIndex: Int = 0
+    @State private var selectedIndex: Int = -1
     
     private func degToRad( _ angle: Double ) -> Double {
         (Double.pi * angle) / 180
     }
     
-    private func getIndex(from pos: CGPoint) -> Int {
+    //    MARK: Gesture
+    private func getIndex(from position: CGPoint) -> Int {
         
-        let measuredAngle = atan( -abs(pos.y) / pos.x )
+        let measuredAngle = atan( (radius - position.y) / (-position.x + radius) )
         let angle = measuredAngle < 0 ? Double.pi + measuredAngle : measuredAngle
-//        
-        print(angle)
         
         let segmentArcLength: Double = Double.pi / Double(count - 1)
         let proposedIndex = round(angle / segmentArcLength)
@@ -34,25 +34,27 @@ struct CactusContextMenu<C: View>: View {
         return Int(proposedIndex)
     }
     
-    private func getLength(from translation: CGSize) -> Double {
-        sqrt( pow( translation.width, 2 ) + pow( translation.height, 2 ) )
+    private func getLength(from pos: CGPoint) -> Double {
+        if pos.y > radius { return 0 }
+        return sqrt( pow( pos.x - radius, 2 ) + pow( Double(radius - pos.y), 2 ) )
+    }
+    
+    private func checkSelection(in pos: CGPoint, and translation: CGSize) {
+        if getLength(from: pos) > threshold {
+            self.selectedIndex = getIndex(from: pos)
+        } else {
+            self.selectedIndex = -1
+        }
     }
     
     private var dragGesture: some Gesture {
         DragGesture(minimumDistance: 10)
             .onChanged { value in
-                self.selectedIndex = getIndex(from: value.location)
+                
+                checkSelection(in: value.location, and: value.translation)
             }
         
-            .onEnded { value in
-                
-                if getLength(from: value.translation) > 100 {
-                    self.selectedIndex = getIndex(from: value.location)
-                } else {
-                    self.selectedIndex = 0
-                }
-                
-            }
+            .onEnded { value in self.selectedIndex = -1 }
         
     }
     
@@ -79,12 +81,17 @@ struct CactusContextMenu<C: View>: View {
                 Circle()
                 
                     .frame(width: 20, height: 20)
-                    .offset(x: radius * cos(degToRad(angle)),
+                    .scaleEffect( i == selectedIndex ? 1.5 : 1 )
+                    .offset(x: -radius * cos(degToRad(angle)),
                             y: -radius * sin(degToRad(angle)))
                        
             }
             
         }
+        .offset(y: radius / 2)
+        .frame(width: radius * 2, height: radius)
+        .animation(.spring, value: selectedIndex)
+        
         .background(.red)
         .gesture(dragGesture)
         
