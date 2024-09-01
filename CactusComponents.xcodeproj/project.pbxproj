@@ -13,6 +13,7 @@
 		C951876C2C3EE7FF00419E3A /* CactusRadialLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876B2C3EE7FF00419E3A /* CactusRadialLines.swift */; };
 		C95187702C3F349F00419E3A /* StripedFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = C951876E2C3F0E2C00419E3A /* StripedFill.swift */; };
 		C97C9C812C405683000D333F /* CactusRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97C9C802C405683000D333F /* CactusRibbon.swift */; };
+		C9885E682C8374FB00B866BE /* CactusTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9885E672C8374FB00B866BE /* CactusTicker.swift */; };
 		C995E91E2C4F08B700FD83C5 /* CactusCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E91D2C4F08B700FD83C5 /* CactusCarousel.swift */; };
 		C995E9212C51817A00FD83C5 /* CactusCarouselDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E9202C51817A00FD83C5 /* CactusCarouselDemoView.swift */; };
 		C995E9232C5181FF00FD83C5 /* CactusRibbonDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C995E9222C5181FE00FD83C5 /* CactusRibbonDemoView.swift */; };
@@ -70,6 +71,7 @@
 		C951876B2C3EE7FF00419E3A /* CactusRadialLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusRadialLines.swift; sourceTree = "<group>"; };
 		C951876E2C3F0E2C00419E3A /* StripedFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripedFill.swift; sourceTree = "<group>"; };
 		C97C9C802C405683000D333F /* CactusRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusRibbon.swift; sourceTree = "<group>"; };
+		C9885E672C8374FB00B866BE /* CactusTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CactusTicker.swift; path = CactusComponents/Components/CactusTicker/CactusTicker.swift; sourceTree = SOURCE_ROOT; };
 		C995E91D2C4F08B700FD83C5 /* CactusCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusCarousel.swift; sourceTree = "<group>"; };
 		C995E9202C51817A00FD83C5 /* CactusCarouselDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusCarouselDemoView.swift; sourceTree = "<group>"; };
 		C995E9222C5181FE00FD83C5 /* CactusRibbonDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusRibbonDemoView.swift; sourceTree = "<group>"; };
@@ -154,6 +156,14 @@
 				C9FC40892C5AA26E004D0133 /* CactusContextMenu.swift */,
 			);
 			path = Fills;
+			sourceTree = "<group>";
+		};
+		C9885E692C83750100B866BE /* CactusTicker */ = {
+			isa = PBXGroup;
+			children = (
+				C9885E672C8374FB00B866BE /* CactusTicker.swift */,
+			);
+			path = CactusTicker;
 			sourceTree = "<group>";
 		};
 		C995E91F2C51814C00FD83C5 /* CactusCarousel */ = {
@@ -293,6 +303,7 @@
 		C9BF0ADB2C21C49E00D7DEAC /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C9885E692C83750100B866BE /* CactusTicker */,
 				C9B462A82C48B82E001A729A /* Layouts */,
 				C951876D2C3F0E2400419E3A /* Fills */,
 				C995E91F2C51814C00FD83C5 /* CactusCarousel */,
@@ -462,6 +473,7 @@
 				C995E9212C51817A00FD83C5 /* CactusCarouselDemoView.swift in Sources */,
 				C9FC40882C57E190004D0133 /* CactusComponentControls.swift in Sources */,
 				C995E9262C51829E00FD83C5 /* CactusRadialLinesDemoView.swift in Sources */,
+				C9885E682C8374FB00B866BE /* CactusTicker.swift in Sources */,
 				C9A02C092C227DD4003A7737 /* LoadingWave.swift in Sources */,
 				C9A02BCD2C22404F003A7737 /* LoadingBlur.swift in Sources */,
 				C9BF0AE32C21C5C600D7DEAC /* CactusComponent.swift in Sources */,
