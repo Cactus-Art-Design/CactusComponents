@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CactusTicker: View {
     
-    @State private var number: Double = 15
+    @State private var number: Double = 1
     
     private let fractionDigits: Int = 3
     private let integerDigits: Int = 2
@@ -18,18 +18,20 @@ struct CactusTicker: View {
     private let numberHeight: Double = 100
     
     private var incrementValue: Double {
-        1 / pow(10, Double(fractionDigits))
+        1
     }
     
+    @Namespace private var namespace
+    
     @ViewBuilder
-    private func makeTickerLine( number: Int ) -> some View {
+    private func makeTickerLine( number: Int, coloumnId: Int ) -> some View {
         
         VStack(spacing: 0) {
             ForEach( 0..<10, id: \.self ) { i in
-                
                 Text("\(i)")
                     .frame(height: numberHeight)
                     .blur(radius: i == number ? 0 : 10)
+                    .padding(.horizontal, 3)
             }
             .offset(y: numberHeight * -Double(number) )
         }
@@ -58,6 +60,12 @@ struct CactusTicker: View {
             
             Slider(value: $number, in: 0...20)
             
+            Text("\(number)")
+            
+            Spacer()
+            
+            
+            
             HStack(spacing: 0) {
                 
                 let string = roundNumber()
@@ -70,17 +78,18 @@ struct CactusTicker: View {
                     
                     Group {
                         if let number {
-                            makeTickerLine(number: number)
+                            makeTickerLine(number: number, coloumnId: i)
                                 
                         } else {
                             Text(char)
                         }
                     }
-                    .border(.red)
                     .animation(.easeInOut, value: number)
                     .font(.custom("", size: 100))
                 }
             }
+            
+            Spacer()
         }
     }
 }
