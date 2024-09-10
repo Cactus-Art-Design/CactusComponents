@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+//MARK: CactusTicker
 struct CactusTicker: View {
     
     @State private var number: Double = 1
@@ -23,6 +24,7 @@ struct CactusTicker: View {
     
     @Namespace private var namespace
     
+//    MARK: TickerLine
     @ViewBuilder
     private func makeTickerLine( number: Int, coloumnId: Int ) -> some View {
         
@@ -51,6 +53,7 @@ struct CactusTicker: View {
         return formatter.string(from: NSNumber(floatLiteral: number)  ) ?? ""
     }
 
+//    MARK: Body
     var  body: some View {
         
         VStack {

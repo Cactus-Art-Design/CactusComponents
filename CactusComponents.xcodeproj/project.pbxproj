@@ -42,6 +42,7 @@
 		C9BF0ADE2C21C4D000D7DEAC /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0ADD2C21C4D000D7DEAC /* TicketView.swift */; };
 		C9BF0AE12C21C50600D7DEAC /* TicketShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AE02C21C50600D7DEAC /* TicketShape.swift */; };
 		C9BF0AE32C21C5C600D7DEAC /* CactusComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF0AE22C21C5C600D7DEAC /* CactusComponent.swift */; };
+		C9E3E01A2C90B30A000E0911 /* CactusTimeDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E3E0192C90B30A000E0911 /* CactusTimeDial.swift */; };
 		C9F153C62C245EDA00237130 /* BlurCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F153C42C245EDA00237130 /* BlurCardView.swift */; };
 		C9F153C72C245EDA00237130 /* BlurCardPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F153C52C245EDA00237130 /* BlurCardPreview.swift */; };
 		C9FC40882C57E190004D0133 /* CactusComponentControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC40872C57E190004D0133 /* CactusComponentControls.swift */; };
@@ -104,6 +105,7 @@
 		C9BF0ADD2C21C4D000D7DEAC /* TicketView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		C9BF0AE02C21C50600D7DEAC /* TicketShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketShape.swift; sourceTree = "<group>"; };
 		C9BF0AE22C21C5C600D7DEAC /* CactusComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusComponent.swift; sourceTree = "<group>"; };
+		C9E3E0192C90B30A000E0911 /* CactusTimeDial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusTimeDial.swift; sourceTree = "<group>"; };
 		C9F153C42C245EDA00237130 /* BlurCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurCardView.swift; sourceTree = "<group>"; };
 		C9F153C52C245EDA00237130 /* BlurCardPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurCardPreview.swift; sourceTree = "<group>"; };
 		C9FC40872C57E190004D0133 /* CactusComponentControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CactusComponentControls.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				C9885E672C8374FB00B866BE /* CactusTicker.swift */,
+				C9E3E0192C90B30A000E0911 /* CactusTimeDial.swift */,
 			);
 			path = CactusTicker;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 				C9BF0AE12C21C50600D7DEAC /* TicketShape.swift in Sources */,
 				C9A02C282C2294F9003A7737 /* SlidingModal.swift in Sources */,
 				C9B462AA2C48B85B001A729A /* Layout1.swift in Sources */,
+				C9E3E01A2C90B30A000E0911 /* CactusTimeDial.swift in Sources */,
 				C9A02C272C2294F9003A7737 /* SlidingModalPreview.swift in Sources */,
 				C995E9212C51817A00FD83C5 /* CactusCarouselDemoView.swift in Sources */,
 				C9FC40882C57E190004D0133 /* CactusComponentControls.swift in Sources */,
