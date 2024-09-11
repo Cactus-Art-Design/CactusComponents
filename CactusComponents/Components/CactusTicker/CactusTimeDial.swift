@@ -14,6 +14,9 @@ import UIUniversals
 struct CactusTimeDial: View {
     
     @Environment(\.colorScheme) var colorScheme
+    @Namespace private var dialNamespace
+    
+    private let timePromptId = "timePromptId"
     
     @State private var time: Date = .now
     
@@ -23,6 +26,8 @@ struct CactusTimeDial: View {
     
     @State private var currentLinearProgress: Double = -100
     @State private var currentAngularProgress: Double = -100
+    
+    @State private var showingDial: Bool = false
     
     private let aspectRatio: Double = 2
     private let circleSize: Double = 55
@@ -91,6 +96,7 @@ struct CactusTimeDial: View {
                 .frame(width: circleSize, height: circleSize)
             
             Rectangle()
+                .foregroundStyle(.clear)
                 .frame(width: 2, height: radius - circleSize  / 2)
         }
         .foregroundStyle(Colors.getAccent(from: colorScheme))
@@ -219,6 +225,9 @@ struct CactusTimeDial: View {
                 HStack(spacing: 7) {
                     let count = 24
                     
+                    Image(systemName: "chevron.left")
+                        .opacity(0.2)
+                    
                     ForEach( 0...count, id: \.self ) { i in
                         
                         let difference = abs((Double(i) / Double(count)) - self.currentLinearProgress)
@@ -232,7 +241,11 @@ struct CactusTimeDial: View {
                             .opacity(currentLinearProgress == -100 ? 0.2 : opacity)
                             .scaleEffect(y: currentLinearProgress == -100 ? 0.8 : scale)
                     }
+                    
+                    Image(systemName: "chevron.right")
+                        .opacity(0.2)
                 }
+                .bold()
             }
             .gesture(linearGesture(in: geo.size.width / 2))
             .animation(.easeInOut, value: currentLinearProgress)
@@ -342,7 +355,7 @@ struct CactusTimeDial: View {
             makeTimePreviewText(formatMinute(currentMinute)) { selectingHour = false }
             
             makeMeridianSelector()
-        }
+        }.frame(minWidth: 200)
     }
     
 //    MARK: header
@@ -354,6 +367,20 @@ struct CactusTimeDial: View {
                     .font(.title3)
                     .bold()
                 Spacer()
+            }
+            .onTapGesture {
+                showingDial = false
+            }
+            
+            if !showingDial {
+                makeTimePreview()
+                    .matchedGeometryEffect(id: timePromptId, in: dialNamespace)
+                    .overlay {
+                        Rectangle()
+                            .foregroundStyle(.clear)
+                            .contentShape(Rectangle())
+                            .onTapGesture { showingDial = true }
+                    }
             }
         }
     }
@@ -381,8 +408,49 @@ struct CactusTimeDial: View {
             let y = sin(newAngle) * radius
             
             content
+                .blur(radius: (self.angle / Double.pi) * 5)
                 .offset(x: resetX - x, y: resetY - y)
         }
+    }
+    
+//    MARK: FullDialLayout
+    @ViewBuilder
+    private func makeFullDialLayout() -> some View {
+        GeometryReader { geo in
+            let radius = geo.size.width / 2
+            
+            Rectangle()
+                .foregroundStyle(.clear)
+                .contentShape(Rectangle())
+                .gesture(planeGesture(in: radius ))
+            
+            .overlay(alignment: .bottom) {
+                if selectingHour { makeHourLabels(in: radius) }
+                else { makeMinuteLabels(in: radius) }
+            }
+            .overlay(alignment: .bottom) {
+                makeTimePreview()
+                    .matchedGeometryEffect(id: timePromptId, in: dialNamespace)
+                    .padding(.bottom)
+            }
+            .background(alignment: .bottom ) {
+                ZStack(alignment: .bottom) {
+                    makePlaneControl(in: radius)
+                    makeTimeMarker(in: radius)
+                }
+            }
+        }
+        .animation(.easeInOut(duration: 1), value: postMeridian)
+        .animation(.easeInOut, value: selectingHour)
+        .padding([.bottom, .horizontal])
+        
+        .aspectRatio(aspectRatio - 0.2, contentMode: .fit)
+        .clipShape(Rectangle())
+        
+        .onAppear { withoutAnimation { postMeridian = currentHour > 12 } }
+        
+        makeLinearControl()
+            .padding(.horizontal, 30)
     }
     
     
@@ -393,44 +461,11 @@ struct CactusTimeDial: View {
         VStack {
             makeHeader()
             
-            GeometryReader { geo in
-                let radius = geo.size.width / 2
-                
-                Rectangle()
-                    .foregroundStyle(.clear)
-                    .contentShape(Rectangle())
-                    .gesture(planeGesture(in: radius ))
-                
-                .overlay(alignment: .bottom) {
-                    if selectingHour {
-                        makeHourLabels(in: radius)
-                        
-                    } else {
-                        makeMinuteLabels(in: radius)
-                    }
-                }
-                .background(alignment: .bottom ) {
-                    ZStack(alignment: .bottom) {
-                        makePlaneControl(in: radius)
-                        makeTimeMarker(in: radius)
-                        
-                        makeTimePreview()
-                            .padding(.bottom)
-                    }
-                }
+            if showingDial {
+                makeFullDialLayout()
             }
-            .animation(.easeInOut(duration: 0.5), value: postMeridian)
-            .animation(.easeInOut, value: selectingHour)
-            .padding([.bottom, .horizontal])
-            
-            .aspectRatio(aspectRatio - 0.2, contentMode: .fit)
-            .clipShape(Rectangle())
-            
-            .onAppear { withoutAnimation { postMeridian = currentHour > 12 } }
-            
-            makeLinearControl()
-                .padding(.horizontal, 30)
         }
+        .animation(.easeInOut, value: showingDial)
     }
 }
 
