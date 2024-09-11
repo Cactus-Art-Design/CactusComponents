@@ -10,15 +10,24 @@ import SwiftUI
 import UIUniversals
 
 
+
 struct CactusTimeDial: View {
     
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var time: Date = .now
     
     @State private var postMeridian: Bool = false
     @State private var currentMeridianSwitch: Int = 0
-    
     @State private var selectingHour: Bool = true
+    
+    @State private var currentLinearProgress: Double = -100
+    @State private var currentAngularProgress: Double = -100
+    
+    private let aspectRatio: Double = 2
+    private let circleSize: Double = 55
+    
+    let title: String = "Select the time"
     
 //    MARK: Convenience Vars
     private var currentDay: Date {
@@ -33,6 +42,15 @@ struct CactusTimeDial: View {
         Double(Calendar.current.component(.minute, from: time))
     }
     
+//    MARK: Format
+    private func formatHour(_ hour: Double) -> String {
+        return (Calendar.current.date(bySetting: .hour, value: Int(hour), of: .now) ?? .now).formatted(Date.FormatStyle().hour(.twoDigits(amPM: .omitted)))
+    }
+    
+    private func formatMinute(_ minute: Double) -> String {
+        return (Calendar.current.date(bySetting: .minute, value: Int(minute), of: .now) ?? .now).formatted(Date.FormatStyle().minute(.twoDigits))
+    }
+    
 //    MARK: Angles and Translations
     ///measured in radians
     private func getHourAngle(of time: Double) -> Double { (time.truncatingRemainder(dividingBy: 12) / 12) * Double.pi }
@@ -41,7 +59,7 @@ struct CactusTimeDial: View {
     
     private func getTranslation(in radius: Double, using angle: Double) -> CGSize {
         let x = cos(angle) * radius
-        let y = sin(angle) * (radius)
+        let y = sin(angle) * radius / (aspectRatio / 2)
         return .init(width: -x, height: -y)
     }
 
@@ -52,15 +70,13 @@ struct CactusTimeDial: View {
         let hourValue = (Int(hour) % 12) + ( !postMeridian ? 0 : 12 )
         let minuteValue = Calendar.current.component(.minute, from: time)
             
-        self.time = Calendar.current.date(bySettingHour: hourValue, minute: minuteValue, second: 0, of: time)!
+        self.time = Calendar.current.date(bySettingHour: hourValue, minute: minuteValue, second: 0, of: time) ?? time
     }
     
     private func setMinute( _ minute: Double ) {
         let minuteValue = Int(roundMinute(minute)) % 60
         
-        self.time = Calendar.current.date(bySettingHour: Int(currentHour),
-                                          minute: minuteValue,
-                                          second: 0, of: time)!
+        self.time = Calendar.current.date(bySettingHour: Int(currentHour), minute: minuteValue, second: 0, of: time) ?? time
     }
     
     
@@ -70,31 +86,40 @@ struct CactusTimeDial: View {
         
         let angle = selectingHour ? getHourAngle(of: currentHour) : getMinuteAngle(of: currentMinute)
 
-        VStack {
+        VStack(spacing: 0) {
             Circle()
-                .frame(width: 10, height: 10)
+                .frame(width: circleSize, height: circleSize)
             
             Rectangle()
-                .frame(width: 2)
+                .frame(width: 2, height: radius - circleSize  / 2)
         }
+        .foregroundStyle(Colors.getAccent(from: colorScheme))
         .rotationEffect(.radians(angle - (Double.pi / 2)), anchor: .bottom)
         
     }
     
 //    MARK: Labels
     @ViewBuilder
+    private func makeDigitLabel(_ title: String) -> some View {
+        Text(title)
+            .opacity(0.75)
+            .bold()
+            .font(.title3)
+            .frame(width: 30, height: 30)
+    }
+    
+    @ViewBuilder
     private func makeHourLabel(_ hour: Double, in radius: Double) -> some View {
         
         let translation = getTranslation(in: radius, using: getHourAngle(of: hour))
+        let label = formatHour(hour)
         
-        Text("\(Int(hour))")
-            .offset(x: translation.width, y: translation.height)
-            .transition(.scale)
+        makeDigitLabel(label)
+            .transition(.rotation(radius: radius, hour: hour))
+            .offset(x: translation.width, y: translation.height + 15)
             .onTapGesture {
-                withAnimation {
                     setHour(hour)
                     selectingHour = false
-                }
             }
     }
     
@@ -116,20 +141,17 @@ struct CactusTimeDial: View {
     @ViewBuilder
     private func makeMinuteLabel(_ minute: Double, in radius: Double) -> some View {
         let translation = getTranslation(in: radius, using: getMinuteAngle(of: minute))
+        let label = formatMinute(minute)
         
-        Text("\(Int(minute))")
-            .offset(x: translation.width, y: translation.height)
-            .onTapGesture { withAnimation {
-                setMinute(minute)
-            }
-            }
+        makeDigitLabel(label)
+            .offset(x: translation.width, y: translation.height + 15)
+            .onTapGesture { setMinute(minute) }
     }
     
     @ViewBuilder
     private func makeMinuteLabels( in radius: Double ) -> some View {
         ZStack {
             ForEach( 0..<12, id: \.self ) { i in
-                
                 let minute = i * ( 60 / 12 )
                 
                 makeMinuteLabel(Double(minute), in: radius)
@@ -138,45 +160,84 @@ struct CactusTimeDial: View {
         }
     }
     
-//    MARK: Time Preview
-    @ViewBuilder
-    private func makeTimePreview() -> some View {
-        
-        let hourLabel = time.formatted(Date.FormatStyle().hour(.twoDigits(amPM: .omitted)) )
-        let minuteLabel = time.formatted( Date.FormatStyle().minute() )
-        
-        VStack {
-            Text("\(time.formatted())")
-            
-            HStack {
-                
-                Text( hourLabel )
-                    .padding()
-                    .background(.gray)
-                    .onTapGesture { withAnimation { selectingHour = true } }
-                
-                Text(":")
-                
-                Text( minuteLabel )
-                    .padding()
-                    .background(.gray)
-                    .onTapGesture { withAnimation { selectingHour = false } }
-                
-                VStack {
-                    Text("AM")
-                        .padding()
-                        .background(.gray)
-                        .onTapGesture { withAnimation { postMeridian = false } }
-                        .opacity(!postMeridian ? 1 : 0.5)
-                    
-                    Text("PM")
-                        .padding()
-                        .background(.gray)
-                        .onTapGesture { withAnimation { postMeridian = true } }
-                        .opacity(!postMeridian ? 0.5 : 1)
-                }
+//    MARK: PlaneControl
+    private struct Line: Shape {
+        func path(in rect: CGRect) -> Path {
+            Path { path in
+                path.move(to: .init(x: rect.midX, y: rect.maxY))
+                path.addLine(to: .init(x: rect.maxX, y: rect.maxY))
             }
         }
+    }
+    
+    @ViewBuilder
+    private func makePlaneControl(in radius: Double) -> some View {
+        ZStack(alignment: .bottom) {
+        
+            Rectangle()
+                .foregroundStyle(.clear)
+            
+            let count = 36
+         
+            ForEach( 0...count, id: \.self ) { i in
+                    
+                let angle = Double(i) / Double(count) * Double.pi
+                let even = i % 3 == 0
+                
+                let difference = abs((Double(i) / Double(count)) - self.currentAngularProgress)
+                let proposedOpacity = (1 / (difference * 15 + 0.5) )
+                let opacity = min(max( 0.1, proposedOpacity ), 1)
+                
+                let proposedScale = (1 / (difference * 10) )
+                let scale = min(max( 0.3, proposedScale ), 1)  * 0.4 + 0.6
+
+                HStack {
+                    Spacer()
+                    
+                    Line()
+                        .stroke(style: .init(lineWidth: 5, lineCap: .round) )
+                        .frame(width: 20 + (even ? 10 : 0))
+                        .opacity( currentAngularProgress == -100 ? ( even ? 0.4 : 0.25 ) : opacity )
+                        .scaleEffect(x: scale, anchor: .trailing)
+                        .padding(.trailing, 30)
+                }
+                .rotationEffect(.init(radians: -angle), anchor: .bottom)
+            }
+        }
+        .animation(.easeInOut, value: currentAngularProgress)
+    }
+    
+//    MARK: LinearControl
+    @ViewBuilder
+    private func makeLinearControl() -> some View {
+        GeometryReader { geo in
+            ZStack {
+                Rectangle()
+                    .foregroundStyle(.clear)
+                    .contentShape(Rectangle())
+                
+                HStack(spacing: 7) {
+                    let count = 24
+                    
+                    ForEach( 0...count, id: \.self ) { i in
+                        
+                        let difference = abs((Double(i) / Double(count)) - self.currentLinearProgress)
+                        let proposedOpacity = (1 / (difference * 15 + 0.5) )
+                        let opacity = min(max( 0.1, proposedOpacity ), 1)
+                        
+                        let proposedScale = (1 / (difference * 10) )
+                        let scale = min(max( 0.3, proposedScale ), 1)  * 0.4 + 0.6
+                        
+                        RoundedRectangle(cornerRadius: 25)
+                            .opacity(currentLinearProgress == -100 ? 0.2 : opacity)
+                            .scaleEffect(y: currentLinearProgress == -100 ? 0.8 : scale)
+                    }
+                }
+            }
+            .gesture(linearGesture(in: geo.size.width / 2))
+            .animation(.easeInOut, value: currentLinearProgress)
+        }
+        .frame(height: 20)
     }
     
 //    MARK: Plane Gesture
@@ -201,6 +262,8 @@ struct CactusTimeDial: View {
                 let angle = measuredAngle < 0 ? Double.pi + measuredAngle : measuredAngle
                 let fraction = angle / Double.pi
                 
+                self.currentAngularProgress = fraction
+                
                 if selectingHour {
                     togglePlaneGestureMeridian(from: y)
                     let hourValue = 12 - fraction * 12
@@ -215,6 +278,7 @@ struct CactusTimeDial: View {
             .onEnded { _ in
                 self.selectingHour = false
                 self.currentMeridianSwitch = 0
+                self.currentAngularProgress = -100
             }
     }
     
@@ -227,40 +291,117 @@ struct CactusTimeDial: View {
     private func linearGesture(in radius: Double) -> some Gesture {
         DragGesture()
             .onChanged { value in
-                let fraction = value.location.x / (radius * 2)
+                self.currentLinearProgress = value.location.x / (radius * 2)
                 
                 if selectingHour {
-                    toggleLinearGestureMeridian(from: fraction)
-                    let hourValue = ( fraction * 24 )
+                    toggleLinearGestureMeridian(from: currentLinearProgress)
+                    let hourValue = ( currentLinearProgress * 24 )
                     self.setHour(hourValue)
                     
                 } else {
-                    let minuteValue = ( fraction * 60 )
+                    let minuteValue = ( currentLinearProgress * 60 )
                     self.setMinute(minuteValue)
                 }
             }
         
             .onEnded { _ in
                 self.selectingHour = false
+                withAnimation { self.currentLinearProgress = -100 }
             }
     }
+    
+//    MARK: Time Preview
+    @ViewBuilder
+    private func makeTimePreviewText(_ text: String, action: @escaping () -> Void) -> some View {
+        UniversalButton {
+            Text( text )
+                .lineLimit(1)
+                .font(.title2)
+                .bold()
+                .rectangularBackground(style: .secondary)
+            
+        } action: { action() }
+    }
+    
+    @ViewBuilder
+    private func makeMeridianSelector() -> some View {
+        UniversalButton {
+            Text(postMeridian ? "PM" : "AM")
+                .bold()
+        } action: { postMeridian.toggle() }
+    }
+    
+    @ViewBuilder
+    private func makeTimePreview() -> some View {
+        HStack(spacing: 5) {
+            makeTimePreviewText(formatHour(currentHour)) { selectingHour = true }
+            
+            Text(":")
+                .bold()
+            
+            makeTimePreviewText(formatMinute(currentMinute)) { selectingHour = false }
+            
+            makeMeridianSelector()
+        }
+    }
+    
+//    MARK: header
+    @ViewBuilder
+    private func makeHeader() -> some View {
+        ZStack(alignment: .trailing) {
+            HStack {
+                Text(title)
+                    .font(.title3)
+                    .bold()
+                Spacer()
+            }
+        }
+    }
+    
+//    MARK: Transitions
+    struct RotationTransitionViewModifier: ViewModifier, Animatable {
+        var angle: Double
+        
+        let radius: Double
+        let hour: Double
+        
+        var animatableData: Double {
+            get { self.angle }
+            set { self.angle = newValue }
+        }
+        
+        func body(content: Content) -> some View {
+            
+            let angle = (hour.truncatingRemainder(dividingBy: 12) / 12) * Double.pi
+            let resetX = cos(angle) * radius
+            let resetY = sin(angle) * radius
+            
+            let newAngle = (hour.truncatingRemainder(dividingBy: 12) / 12) * Double.pi + animatableData
+            let x = cos(newAngle) * radius
+            let y = sin(newAngle) * radius
+            
+            content
+                .offset(x: resetX - x, y: resetY - y)
+        }
+    }
+    
+    
     
 //    MARK: Body
     var body: some View {
         
         VStack {
+            makeHeader()
+            
             GeometryReader { geo in
                 let radius = geo.size.width / 2
                 
-                ZStack(alignment: .bottom) {
-                    Rectangle()
-                        .foregroundStyle(.clear)
-                        .contentShape(Rectangle())
-                    
-                    makeTimePreview()
-                    
-                    makeTimeMarker(in: radius)
-                    
+                Rectangle()
+                    .foregroundStyle(.clear)
+                    .contentShape(Rectangle())
+                    .gesture(planeGesture(in: radius ))
+                
+                .overlay(alignment: .bottom) {
                     if selectingHour {
                         makeHourLabels(in: radius)
                         
@@ -268,21 +409,40 @@ struct CactusTimeDial: View {
                         makeMinuteLabels(in: radius)
                     }
                 }
-                .gesture(planeGesture(in: radius ))
+                .background(alignment: .bottom ) {
+                    ZStack(alignment: .bottom) {
+                        makePlaneControl(in: radius)
+                        makeTimeMarker(in: radius)
+                        
+                        makeTimePreview()
+                            .padding(.bottom)
+                    }
+                }
             }
-            .animation(.easeInOut, value: postMeridian)
-            .animation(.easeInOut(duration: 0.25), value: time)
+            .animation(.easeInOut(duration: 0.5), value: postMeridian)
             .animation(.easeInOut, value: selectingHour)
+            .padding([.bottom, .horizontal])
             
-            .border(.red)
-            .aspectRatio(2, contentMode: .fit)
+            .aspectRatio(aspectRatio - 0.2, contentMode: .fit)
+            .clipShape(Rectangle())
             
+            .onAppear { withoutAnimation { postMeridian = currentHour > 12 } }
             
-            GeometryReader { geo in
-                Rectangle()
-                    .gesture(linearGesture(in: geo.size.width / 2))
-            }.frame(height: 50)
+            makeLinearControl()
+                .padding(.horizontal, 30)
         }
+    }
+}
+
+extension AnyTransition {
+    static func rotation(radius: Double, hour: Double) -> AnyTransition {
+        .asymmetric(insertion: .modifier(active: CactusTimeDial.RotationTransitionViewModifier(angle: -Double.pi, radius: radius, hour: hour),
+                                         identity: CactusTimeDial.RotationTransitionViewModifier(angle: 0, radius: radius, hour: hour)),
+                    
+                    removal: .modifier(active: CactusTimeDial.RotationTransitionViewModifier(angle: Double.pi, radius: radius, hour: hour),
+                                       identity: CactusTimeDial.RotationTransitionViewModifier(angle: 0, radius: radius, hour: hour))
+        )
+        .combined(with: .opacity)
     }
 }
 

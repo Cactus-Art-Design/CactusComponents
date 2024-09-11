@@ -19,7 +19,7 @@ struct CactusComponentsApp: App {
         Colors.setColors(baseLight:         .init(255, 255, 255),
                          secondaryLight:    .init(240, 240, 240),
                          baseDark:          .init(0, 0, 0),
-                         secondaryDark:     .init(15.5, 15.5, 15.5),
+                         secondaryDark:     .init(25.5, 25.5, 25.5),
                          lightAccent:       .init(63, 45, 64),
                          darkAccent:        .init(212, 178, 214))
         
